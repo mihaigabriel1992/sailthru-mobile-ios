@@ -22,7 +22,6 @@
 		DEB5F4871741708000674D02 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DEB5F4861741708000674D02 /* Default-568h@2x.png */; };
 		DEB5F48A1741708000674D02 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DEB5F4891741708000674D02 /* ViewController.m */; };
 		DEB5F48D1741708000674D02 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DEB5F48B1741708000674D02 /* ViewController.xib */; };
-		DEE4868A1896BC530024963A /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DEE486881896BC530024963A /* LICENSE */; };
 		DEE4868B1896BC530024963A /* README in Resources */ = {isa = PBXBuildFile; fileRef = DEE486891896BC530024963A /* README */; };
 /* End PBXBuildFile section */
 
@@ -51,8 +50,6 @@
 		DEB5F4881741708000674D02 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		DEB5F4891741708000674D02 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		DEB5F48C1741708000674D02 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
-		DEB5F4A5174183B800674D02 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		DEE486881896BC530024963A /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		DEE486891896BC530024963A /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -75,7 +72,6 @@
 		DE4EAE0B17CCD99E00061FBB /* SailThruSDK */ = {
 			isa = PBXGroup;
 			children = (
-				DEE486881896BC530024963A /* LICENSE */,
 				DEE486891896BC530024963A /* README */,
 				DE4EAE1017CCD99E00061FBB /* ios7 */,
 				DE4EAE1117CCD99E00061FBB /* SailthruSDK.h */,
@@ -115,7 +111,6 @@
 		DEB5F46F1741708000674D02 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DEB5F4A5174183B800674D02 /* CoreLocation.framework */,
 				DEB5F4701741708000674D02 /* UIKit.framework */,
 				DEB5F4721741708000674D02 /* Foundation.framework */,
 				DEB5F4741741708000674D02 /* CoreGraphics.framework */,
@@ -207,7 +202,6 @@
 				DEE4868B1896BC530024963A /* README in Resources */,
 				DEB5F47B1741708000674D02 /* InfoPlist.strings in Resources */,
 				DEB5F4831741708000674D02 /* Default.png in Resources */,
-				DEE4868A1896BC530024963A /* LICENSE in Resources */,
 				DEB5F4851741708000674D02 /* Default@2x.png in Resources */,
 				DEB5F4871741708000674D02 /* Default-568h@2x.png in Resources */,
 				DEB5F48D1741708000674D02 /* ViewController.xib in Resources */,
