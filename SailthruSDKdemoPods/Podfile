@@ -1,0 +1,5 @@
+platform :ios, '7.0'
+
+#pod 'SailthruSDK', '~> 3.2.6'
+pod 'SailthruSDK', :path => '/Volumes/Data/gitst/sailthru-ios-sdk/libSailthru/Sailthru_SDK_iOS.podspec'
+

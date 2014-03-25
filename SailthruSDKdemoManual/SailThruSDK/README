@@ -1,0 +1,167 @@
+
+      Using Sailthru's iOS SDK for Push and Tracking
+      Version 3.2.5 Released March 18. 2014
+      ----------------------------------------------
+
+*** IMPORTANT: If you update the SDK, please replace the header files too, not just the .a file ***
+
+Version Changes:
+---------------
+
+- 3.2.5
+  * STManager.h makes extensive use of doxygen now that Xcode 5 uses it for command
+	completion and Quick Help (Option-tap a method)
+  * added uinfo on how Sailthru processes tag strings (bottom of this document)
+  * new "version" method in STManager, will currently return @"3.2.5"
+  * Resolved an issue causing some anonymous registrations to fail
+  * The SDK previously used two files, now just one
+  * All data stored in the single file now completely encrypted (tags and URLs, etc)
+  * All network transmission now uses HTTPS
+  * Tag inforation and a link appended to this document.
+
+- 3.2.0 - 3.2.2
+  * increased error checking for several input parameters
+  * tuned iOS7 networking code
+- 3.1.0
+  * small bugs fixes, address Xcode warnings
+- 3.0.0
+  * added methods to access the Sailthru Recommendation service
+- 2.0.0
+  * an iOS 7.0 library was added. The primary difference between it and the iOS6 library is that 
+  it uses the new NSURLSession instead of NSURLConnection (but does not do background transmission).
+  * the iOS5.1 library was pulled. If anyone really needs it, just ask and we'll re-enable it for you.
+
+
+Notes answering some often asked questions:
+------------------------------------------
+
+- this SDK does not use categories on anything other than its own classes, which all use
+  an "ST" prefix
+
+- every line of code in this SDK is under our control - we use no external large networking
+  frameworks such as AFNetworking.
+  
+- it saves on file (marked as "Do Not Backup") in the file system, and everything stored
+  in that file is encrypted.
+  
+- all network transmissions use HTTPS
+
+- the library still has all compile symbols, to better help you if you get a crash
+
+
+Process to First Incorporate this SDK:
+-------------------------------------
+
+1) Register your App with Sailthru. 
+
+   You will need to provide the push certifcate (in .p12 format), 
+   your app's bundleID, and select "dev" or "prod" (telling 
+   Sailthru which APNS to use). Sailthru returns an "app_id", which
+   you must supply to the SDK along with your "api_key".
+   
+   Note that you will most likely register your app twice: once for
+   development (using the dev APNS), and once for the App Store release
+   (using the production APNS).
+   
+   To enable your account for mobile use, please contact your Sailthru Acccount
+   Manager. You will register the app then using the "Mobile" option 
+   under the "Settings" menu in my.sailthru.com 
+   
+2) Incorporate the SDK into your App.
+
+   The SDK is provided as a library with header files, one for
+   iOS 6.0 and the other for 7.0. Newer libraries use newer more
+   efficient APIs, so please use the newest possible version. You copy it
+   out of the SailthruSDKdemo folder into your project.
+
+3) Instantiate the STManager object and register your app.
+
+   See the STManager.h file for the specifics of the registration call. It
+   returns an immediate indication as to whether all parameters appear reasonable.
+   It then registers in the background and messages the delegate when registration 
+   succeeds or fails (failure is almost for sure a typo or reversed parameter). If 
+   the network is unavailable this process may take some time.
+   
+4) Send tracking info.
+
+   See STEvent for the two types of tracking events - tags and urls. Your app 
+   can start recording these immediately after instantiating the STManager shared object,
+   as the library stores them until the registration completes or the network becomes available.
+
+5) Push Notifications
+
+   Push notifications get sent using the existing user contact infastructure, either from 
+   the web interface or using the Sailthru API.
+   
+   When your app receives a push notification from Sailthru, you should call a method on
+   STManager so it can extract the message ID. Subsequent messages get tagged with this ID
+   automatically by the SDK, and you have control over when the tagging stops, either by selecting 
+   one of the options (or accepting the default), or by directly messaging  the STManager.
+
+
+Notes:
+
+a) thread-safety
+   
+   Messages to the STManager singleton should be sent on the main queue, but
+   other messages can be sent on any thread/dispatch_queue. All delegate messages
+   arrive on the main queue. [If you'd like the ability to specify a delegate
+   queue just ask.]
+
+b) categories
+  
+   The Sailthru library only uses categories on its own classes, all of which use the "ST" preference.
+
+c) Apple has some great material to assist in debugging push notification problems. 
+ - Read this StackOverFlow answer: http://stackoverflow.com/a/20110555/1633251. This article
+   has a reference to an internal Apple Dev forum on how to install tracking profiles (that
+   as of today don't work with iOS7).
+ - Apple TN2265: https://developer.apple.com/library/ios/technotes/tn2265/_index.html
+
+
+How to Incorporate the SailthruSDK in your App
+----------------------------------------------
+
+1) Copy the SailthruSDK folder to the app folder, which contains the ".xcodeproj" project file,
+   then add the directory to your project, but don't add it to any targets (unselect the checkbox).
+   
+2) Add the appropriate library (iOS 6.0 or 7.0) folder, by going to your target's
+   Build Phase tab, Link Binary with Libraries, tap on "+", then navigate to the appropriate
+   folder and select libSailthru.a
+
+3) Add the following to the Project's Build Settings:
+
+  * Search Paths -> Library Search Paths: $PROJECT_DIR/SailthruSDK/ios<version>
+  * Search Paths -> User Header Search Paths: $PROJECT_DIR/SailthruSDK
+  * Linking -> Other Link Flags: -ObjC  NOTE: If you fail to do this, your app will crash on launch.
+
+4) Add #import "SailthruSDK" line to AppDelegate and wherever else you want 
+   to use the SDK, or add it to your pch file.
+
+5) Add the STManager and STManagerDelegate code as found in AppDelegate. Essentially you need
+   to instantiate the STManager singleton, then register your app. If you want to test in the Simulator,
+   you need to get a push token from a run on a device, then hard copy that to your app in 
+   didFailToRegisterForRemoteNotificationsWithError method (shown in the demo app).
+
+6) Samples of sending a tracking event are in ViewController.m. You get two flavors of events: URLs and tags.
+
+7) Spend a few moments browsing the three ST... headers. There are methods to select more or less logging, 
+   redirect logging to an object in your app, and options on when push notifications message IDs should
+   stop being associated with events.
+
+8) The libSailthru library has support for armv7, armv7s, and armv64, and i386.
+
+Tag format (from Sender.h, which is the definitive reference)
+----------
+
+ Each tag is processed by Sailthru as follows
+ - the string is trimmed, that is leading and trailing white space is removed
+ - all underscores, non-alphanumeric characters, and remaining whitespace get converted to dashes
+ - all upper case characers are converted to lower case
+ - if the result is a number, or starts with a number, it's discarded
+ - finally, if the resultant string is longer than 32 characters, its truncated to that length
+
+More data on tags can be found at this URL:
+  http://getstarted.sailthru.com/documentation/products/horizon-data-collection/horizon-meta-tags
+
+  Copyright (c) 2013-2014 Sailthru, Inc. All rights reserved.
