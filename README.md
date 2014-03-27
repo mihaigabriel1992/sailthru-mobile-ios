@@ -3,7 +3,7 @@ sailthru-mobile-ios
 
 Welcome to the **Sailthru SDK** distribution site!
 
-You will find everything you need to incorporate Sailthru's iOS SDK into your applications. 
+You will find everything you need to incorporate Sailthru's iOS SDK into your applications. If you add yourself to the **Watch List** by tapping on the **Watch** button, you will get notified each time the repository changes.
 
 If you just happened on this site, you can discover how Sailthru can can address your company's marketing challenges and transform its business [here](http://www.sailthru.com/why-sailthru/).
 
