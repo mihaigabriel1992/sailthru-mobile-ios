@@ -1,7 +1,7 @@
 sailthru-mobile-ios
 ===================
 
-Welcome to the Sailthru SDK distribution site!
+Welcome to the **Sailthru SDK** distribution site!
 
 You will find everything you need to incorporate Sailthru's iOS SDK into your applications. 
 
@@ -48,4 +48,10 @@ or for the iOS6 version:
 
     pod 'SailthruSDK/iOS6', '~> 3.2.6'
     
-    
+## Version Verification
+
+The SDK supports a **version** method, so you can verify in your code that in fact you've retrieved the desired distribution release.
+
+
+
+Copyright (c) 2014 Sailthru, Inc    
