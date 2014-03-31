@@ -12,9 +12,8 @@ If you just happened on this site, you can discover how Sailthru can can address
 1. README - this file
 2. LICENSE - all content in this repository is released under the Apache Version 2 License
 3. SailthruSDKdemoManual - contains a sample project that demonstrates how to link the SDK manually into an app
-4. SailthruSDKdemoManual/SailthruSDK - the SDK header files, and two static libraries, one for iOS6 and one for iOS7. Please use the latest possible version for your app.
+4. SailthruSDK - the SDK header files, and two static libraries, one for iOS6 and one for iOS7. Please use the latest possible version for your app.
 5. SailthruSDKdemoPods - contains a sample project that uses Cocopods—it has a Podfile, and uses the Cocoapods public repository to retrieve and load the SDK. Note that the SailthruSDK.podspec file contains subspecs, with the default subspec being iOS7 but the linkage for iOS6 too.
-6. SailthruSDKdemoPods/SailthruSDK - a symbolic link to **SailthruSDKdemoManual/SailthruSDK**.
 
 If you have not heard about [CocoaPods](http://cocoapods.org) before, it's an open source system by which users can better manage the inclusion of mutiple external libraries or open source code.
 
@@ -23,7 +22,7 @@ Each distribution is tagged using [sematic versioning](http://semver.org) that h
 
 ### Full Content
 
-1.Choose a **Release** from the GitHub release menu, which lets your retrieve a zip archive of the release. This archive is equivalent to older distributions that you received from your Sailthru account manager.
+1.Choose a **Release** from the GitHub release menu, which lets your retrieve a zip archive of the release, which includes every file in this repository. This archive is equivalent to older distributions that you received from your Sailthru account manager.
 
 2. Clone the proper repository version using **git**, then checkout the desired release (which is prefixed by a 'v' character). On the command line this would take the form of: 
 
