@@ -31,6 +31,8 @@ Each distribution is tagged using [sematic versioning](http://semver.org) that h
 
 ### CocoaPods
 
+If you haven't heard of [CocoaPods](cocoapods.org) before, you can learn about it by browsing their site or reading the [RayWenderlich](http://www.raywenderlich.com/12139/introduction-to-cocoapods) and [Bart Jacobs](http://code.tutsplus.com/tutorials/streamlining-cocoa-development-with-cocoapods--mobile-15938) tutorials. In a nutshell, **CocoaPods** lets you integrate multiple external libraries or open source projects into your primary project, and maintain them as they morph over time.
+
 1. If you want to experiment, you can use one of the **Full Content** methods to retrieve all files, then open the **SailthruDemo.workspace** file contained in the **SailthruSDKdemoPods** folder, and examine how all everything gets wired together.
 
 2. To just retrieve a newer spec, update your **Podfile** to reference the desired release, then run:
@@ -41,11 +43,12 @@ within your project directory.
 
 Your **Podfile** will contain a line similar to:
 
-    pod 'SailthruSDK', '~> 3.2.6'  # OK to use'SailthruSDK/iOS7' too
+    pod 'Sailthru_SDK_iOS', '~> 3.2.6'  # or 'Sailthru_SDK_iOS/ios7'
+    # Note that the primary subspec points to the latest version
 
 or for the iOS6 version:
 
-    pod 'SailthruSDK/iOS6', '~> 3.2.6'
+    pod 'Sailthru_SDK_iOS/ios6', '~> 3.2.6'
     
 ## Version Verification
 
