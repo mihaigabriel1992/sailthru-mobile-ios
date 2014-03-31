@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                  = 'Sailthru_SDK_iOS'
-  s.license               = 'LICENSE.txt'
+  #s.license               = 'LICENSE.txt'
   #s.license               = 'Apache License, Version 2.0'
   #s.license               = { :type => 'Apache License, Version 2.0' }
   #s.license               = 'BSD'
@@ -9,30 +9,29 @@ Pod::Spec.new do |s|
   s.homepage              = 'https://github.com/sailthru/sailthru-mobile-ios'
   s.author                = "Sailthru, Inc"
   s.platform              = :ios
-  s.ios.deployment_target = '7.0'
-  #s.source                = { :git => 'https://github.com/sailthru/sailthru-mobile-ios.git', :branch => 'master', :tag => "v" +  s.version.to_s }
-  s.source                = { :git => 'https://github.com/sailthru/sailthru-mobile-ios.git', :tag => 'v3.2.6' }
+  #s.ios.deployment_target = '7.0'
+  s.source                = { :git => 'https://github.com/sailthru/sailthru-mobile-ios.git', :branch => 'master', :tag => "v" +  s.version.to_s }
   s.requires_arc          = true
   #s.public_header_files   = "Headers/Public/*.h"
   s.default_subspec       = 'iOS7'
   s.subspec 'iOS7' do |sp|
-    sp.source_files        = 'SailthruSDKdemoManual/SailThruSDK/*.h'
-    sp.preserve_paths      = 'SailthruSDKdemoManual/SailThruSDK/README'
-	sp.ios.vendored_library = 'SailthruSDKdemoManual/SailThruSDK/iOS7/libSailthru.a'
+    sp.source_files        = 'SailThruSDK/*.h'
+    sp.preserve_paths      = 'SailThruSDK/README', 'SailThruSDK/ios7/libSailthru.a'
+	sp.ios.vendored_library = 'SailThruSDK/ios7/libSailthru.a'
     sp.library             = 'Sailthru'
-    sp.xcconfig            = { 'LIBRARY_SEARCH_PATHS' => '$(SRC_ROOT)/Pods/Sailthru_SDK_iOS/SailthruSDKdemoManual/SailThruSDK/iOS7' }
-    sp.frameworks          = 'Foundation', 'UIKit'
+    sp.xcconfig            = { 'LIBRARY_SEARCH_PATHS' => '$(SRC_ROOT)/Pods/Sailthru_SDK_iOS/SailThruSDK/ios7' }
+    sp.frameworks          = 'Foundation'
     sp.platform              = :ios
     sp.ios.deployment_target = '7.0'
   end
 
   s.subspec 'iOS6' do |sp|
-    sp.source_files        = 'SailthruSDKdemoManual/SailThruSDK/*.h'
-    sp.preserve_paths      = 'SailthruSDKdemoManual/SailThruSDK/README'
-	sp.ios.vendored_library = 'SailthruSDKdemoManual/SailThruSDK/iOS7/libSailthru.a'
+    sp.source_files        = 'SailThruSDK/*.h'
+    sp.preserve_paths      = 'SailThruSDK/README', 'SailThruSDK/ios6/libSailthru.a'
+	sp.ios.vendored_library = 'SailThruSDK/iOS7/libSailthru.a'
     sp.library             = 'Sailthru'
-    sp.xcconfig            = { 'LIBRARY_SEARCH_PATHS' => '$(SRC_ROOT)/Pods/Sailthru_SDK_iOS/SailthruSDKdemoManual/SailThruSDK/iOS6' }
-    sp.frameworks          = 'Foundation', 'UIKit'
+    sp.xcconfig            = { 'LIBRARY_SEARCH_PATHS' => '$(SRC_ROOT)/Pods/Sailthru_SDK_iOS/SailThruSDK/ios6' }
+    sp.frameworks          = 'Foundation'
     sp.platform              = :ios
     sp.ios.deployment_target = '6.0'
   end
