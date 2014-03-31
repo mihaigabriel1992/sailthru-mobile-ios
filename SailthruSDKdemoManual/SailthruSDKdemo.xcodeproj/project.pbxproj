@@ -79,7 +79,8 @@
 				DE4EAE1317CCD99E00061FBB /* STLog.h */,
 				DE4EAE1417CCD99E00061FBB /* STManager.h */,
 			);
-			path = SailThruSDK;
+			name = SailThruSDK;
+			path = ../SailThruSDK;
 			sourceTree = "<group>";
 		};
 		DE4EAE1017CCD99E00061FBB /* ios7 */ = {

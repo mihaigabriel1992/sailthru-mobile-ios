@@ -1,12 +1,17 @@
 
       Using Sailthru's iOS SDK for Push and Tracking
-      Version 3.2.5 Released March 18. 2014
+      Version 3.2.6 Released March 31, 2014
       ----------------------------------------------
 
 *** IMPORTANT: If you update the SDK, please replace the header files too, not just the .a file ***
 
 Version Changes:
 ---------------
+
+- 3.2.6
+  * no code changes
+  * podspec for CocoaPods users, created a second demo project using it
+  * moved SailthruSDK up a directory to better support CocoaPods
 
 - 3.2.5
   * STManager.h makes extensive use of doxygen now that Xcode 5 uses it for command
