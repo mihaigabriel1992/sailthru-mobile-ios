@@ -43,17 +43,20 @@ within your project directory.
 
 Your **Podfile** will contain a line similar to:
 
-    pod 'Sailthru_SDK_iOS', '~> 3.2.6'  # or 'Sailthru_SDK_iOS/ios7'
+    pod 'Sailthru_SDK_iOS', '~> 3.2.7'  # or 'Sailthru_SDK_iOS/ios7'
     # Note that the primary subspec points to the latest version
 
 or for the iOS6 version:
 
-    pod 'Sailthru_SDK_iOS/ios6', '~> 3.2.6'
+    pod 'Sailthru_SDK_iOS/ios6', '~> 3.2.7'
     
 ## Version Verification
 
 The SDK supports a **version** method, so you can verify in your code that in fact you've retrieved the desired distribution release.
 
+## Notes
+
+Brenden Mulligan, co-founder and designer at **Cluster**, [documented the approach](http://techcrunch.com/2014/04/04/the-right-way-to-ask-users-for-ios-permissions/) on **TechCrunch** that his company uses to increase the percentage of users who allow push notifications etc. Definitely worth a read!
 
 
 Copyright (c) 2014 Sailthru, Inc    
