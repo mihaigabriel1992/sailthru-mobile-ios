@@ -2,13 +2,45 @@
 //  AppDelegate.m
 //  SailthruSDKdemo
 //
-//  Copyright (c) 2013 Sailthru, Inc. All rights reserved.
+//  Copyright (c) 2013-2014 Sailthru, Inc. All rights reserved.
 //
 
 #import "AppDelegate.h"
 #import "SailthruSDK.h"
 
 #import "ViewController.h"
+
+
+static NSString __attribute__((unused)) *dataToHex(NSData *data)
+{
+    NSMutableString *str    = [NSMutableString stringWithCapacity:100];
+    const unsigned char *p  = data.bytes;
+    NSUInteger len          = data.length;
+    
+    for(NSUInteger i = 0; i < len; ++i)
+        [str appendFormat:@"%02.2X", p[i]];
+    
+    return [str copy];
+}
+ 
+static NSData __attribute__((unused)) *hexToData(NSString *str)
+{
+    const char *ptr     = [str cStringUsingEncoding:NSASCIIStringEncoding];
+    NSUInteger len      = str.length / 2;
+    NSMutableData *data = [NSMutableData dataWithCapacity:len];
+    
+    while(len--)
+    {
+        char num[5] = (char[]){ '0', 'x', 0, 0, 0 };
+        num[2]      = *ptr++;
+        num[3]      = *ptr++;
+        uint8_t n   = (uint8_t)strtol(num, NULL, 0);
+        
+        [data appendBytes:&n length:1];
+    }
+    
+    return [data copy];
+}
 
 @interface AppDelegate ()
 {
@@ -45,7 +77,7 @@
 {
 	NSLog(@"DID REGISTER DEVICE TOKEN [len = %zd] %@", [deviceToken length], deviceToken);
 	
-	NSString *token = [self dataToHex:deviceToken];
+	NSString *token = dataToHex(deviceToken);
 	UIPasteboard *pb = [UIPasteboard generalPasteboard];
 	[pb setString:token];
 
@@ -72,7 +104,7 @@
 	NSString *domain	= @"myHorizonDomain";
 	NSString *apiKey	= @"Your Company's api_key";
 	NSString *token		= @" some hard coded token obtained by running your app on a real device "; // for testing using the Simulator
-	NSData *deviceToken	= [self hexToData:token];
+	NSData *deviceToken	= hexToData(token);
 
 	// after this it will be possible to push notifications from Sailthru to the user
 	//[stManager registerUserID:user userIDtype:STEMailIdentifier token:deviceToken appID:appID horizonDomain:domain];
@@ -106,34 +138,6 @@
 		[alert show];
 	}
 	return ret;
-}
-
-- (NSString *)dataToHex:(NSData *)data
-{
-	NSMutableString *str = [NSMutableString stringWithCapacity:100];
-	
-	const unsigned char *p = [data bytes];
-	NSUInteger len = [data length];
-	for(int i=0; i<len; ++i) {
-		[str appendFormat:@"%02.2X", p[i]];
-	}
-	return str;
-}
-
-- (NSData *)hexToData:(NSString *)str
-{
-	const char *ptr = [str cStringUsingEncoding:NSASCIIStringEncoding];
-	NSUInteger len = [str length]/2;
-	NSMutableData *data = [NSMutableData dataWithCapacity:len];
-	while(len--) {
-		char num[5] = (char[]){ '0', 'x', 0, 0, 0 };
-		num[2] = *ptr++;
-		num[3] = *ptr++;
-		uint8_t n = (uint8_t)strtol(num, NULL, 0);
-		
-		[data appendBytes:&n length:1];
-	}
-	return data;
 }
 
 @end
