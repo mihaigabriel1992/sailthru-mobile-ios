@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
 	sp.ios.vendored_library = 'SailThruSDK/ios7/libSailthru.a'
     sp.library             = 'Sailthru'
     sp.xcconfig            = { 'LIBRARY_SEARCH_PATHS' => '$(PODS_ROOT)/Sailthru_SDK_iOS/SailThruSDK/ios7' }
-    sp.frameworks          = { 'Foundation', 'SystemConfiguration' }
+    sp.frameworks          = 'Foundation', 'SystemConfiguration'
     sp.platform              = :ios
     sp.ios.deployment_target = '7.0'
   end
@@ -27,7 +27,7 @@ Pod::Spec.new do |s|
 	sp.ios.vendored_library = 'SailThruSDK/ios6/libSailthru.a'
     sp.library             = 'Sailthru'
     sp.xcconfig            = { 'LIBRARY_SEARCH_PATHS' => '$(PODS_ROOT)/Sailthru_SDK_iOS/SailThruSDK/ios6' }
-    sp.frameworks          = { 'Foundation', 'SystemConfiguration' }
+    sp.frameworks          = 'Foundation', 'SystemConfiguration'
     sp.platform              = :ios
     sp.ios.deployment_target = '6.0'
   end
