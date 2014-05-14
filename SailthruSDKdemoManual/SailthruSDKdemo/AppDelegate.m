@@ -92,7 +92,8 @@ static NSData __attribute__((unused)) *hexToData(NSString *str)
 
 	// after this it will be possible to push notifications from Sailthru to the user
 	//[stManager registerUserID:user userIDtype:STEMailIdentifier token:deviceToken appID:appID horizonDomain:domain];
-	[stManager registerUsingMode:stDevelopmentMode horizonDomain:domain apiKey:apiKey appID:appID userIDtype:STEMailIdentifier userID:uid token:deviceToken];
+	BOOL ret = [stManager registerUsingMode:stDevelopmentMode horizonDomain:domain apiKey:apiKey appID:appID userIDtype:STEMailIdentifier userID:uid token:deviceToken];
+	assert(ret); // in development, treat a failure here as a hard hard error!
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
@@ -108,7 +109,9 @@ static NSData __attribute__((unused)) *hexToData(NSString *str)
 
 	// after this it will be possible to push notifications from Sailthru to the user
 	//[stManager registerUserID:user userIDtype:STEMailIdentifier token:deviceToken appID:appID horizonDomain:domain];
-	[stManager registerUsingMode:stDevelopmentMode horizonDomain:domain apiKey:apiKey appID:appID userIDtype:STEMailIdentifier userID:uid token:deviceToken];
+	BOOL ret = [stManager registerUsingMode:stDevelopmentMode horizonDomain:domain apiKey:apiKey appID:appID userIDtype:STEMailIdentifier userID:uid token:deviceToken];
+	assert(ret); // in development, treat a failure here as a hard hard error!
+
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
@@ -143,12 +146,6 @@ static NSData __attribute__((unused)) *hexToData(NSString *str)
 @end
 
 @implementation AppDelegate (STManagerDelegate)
-
-- (void)pleaseRegisterWithoutUserID
-{
-	// disabled for now - see STManager.h
-	NSLog(@"pleaseRegisterWithoutUserID");	// if you get this you forgot to register - nag message
-}
 
 - (void)registrationSucceeded:(BOOL)success error:(NSString *)errorMsg
 {

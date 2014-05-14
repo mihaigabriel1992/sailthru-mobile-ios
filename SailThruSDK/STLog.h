@@ -2,18 +2,18 @@
 //  STLog.h
 //  Logger
 //
-//  Copyright (c) 2013 Sailthru, Inc.. All rights reserved.
+//  Copyright (c) 2013-2014 Sailthru, Inc. All rights reserved.
 //
 
 // If you'd like to receive the log messages and deal with them yourself, make yourself the delegate
 @protocol STLogging <NSObject>
 
-- (void)logStMessage:(NSString *)msg;
+- (void)logStMessage:(NSString *)msg;	// may arrive from any thread - dispatch to main queue if required.
 
 @end
 
 // Users can get more or less information as desired.
-typedef enum { stError=-1, stInformative=1, stWarning, stHard, stCatastrophic, stDisableLogging } stLogType;
+typedef enum { stError=-1, stInternal=0, stInformative, stWarning, stHard, stCatastrophic, stDisableLogging } stLogType;
 
 // Default is stCatastrophic. Returns the old value if the new one is within range, or stError otherwise.
 stLogType stSetLogThreshold(stLogType t);
