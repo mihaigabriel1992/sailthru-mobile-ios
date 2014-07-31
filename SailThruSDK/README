@@ -1,8 +1,8 @@
 
 Sailthru's iOS SDK for Push Notifications and User Tracking
-Version 3.3.0
+Version 3.3.5
 
-May 12, 2014
+July 31, 2014
 ----------------------------------------------
 
 First time SDK users should first read the "Process to First Incorporate this SDK" section,
@@ -13,44 +13,32 @@ target.
 
 Version Changes:
 ---------------
+- 3.3.5
+  * Support for the client-supplied key/values attached to Push Notifications
+  * Recommendations offers more options
+  * The documentation for 'recommendations' incorrectly stated that the values in the 'tags' array 
+    were logically ORed by Sailthru; they are logically ANDed
+  * New Event type accepts both tags and a single URL
+  * Enumerations changed to fit into a Swift usable format, older ones deprecated
+
 - 3.3.0
   * Improved Anonymous -> Email -> Anonymous -> Email registration handling
   * Properly handle to back-to-back registration messages
   * General code improvements, hardening, and additional logging messages
   * Instructions on appending crash reports with Sailthru log info (bottom of this file)
 
-- 3.2.7
-  * Namespaced 'kReachabilityChangedNotification' to 'STkReachabilityChangedNotification'
-- 3.2.6
-  * Changes to the README, and first release available on the web.
-  * Removed "optional" link to "Core Location" (previous Xcode required for use of CLLocation.h)
-- 3.2.5
-  * STManager.h makes extensive use of doxygen now that Xcode 5 uses it for command
-	completion and Quick Help (Option-tap a method)
-  * appended info on how Sailthru processes tags to this document, and a link
-  * new "version" method in STManager, will currently return @"3.2.5"
-  * resolved an issue causing some anonymous registrations to fail
-  * the SDK previously used two files, now just one
-  * all data stored in the single file now completely encrypted (tags and URLs, etc)
-  * all network transmission now uses HTTPS
-  * a few methods were deprecated - please switch to the indicated replacement
-- 3.2.0 - 3.2.2
-  * increased error checking for several input parameters
-  * tuned iOS7 networking code
-- 3.1.0
-  * small bugs fixes, address Xcode warnings
-- 3.0.0
-  * added methods to access the Sailthru Recommendation service
-- 2.0.0
-  * an iOS 7.0 library was added. The primary difference between it and the iOS6 library is that 
-  it uses the new NSURLSession instead of NSURLConnection (but does not do background transmission).
-  * the iOS5.1 library was pulled. If anyone really needs it, just ask and we'll re-enable it for you.
+[Prior version history moved to the bottom of this file.]
 
 
-Often asked questions
+Answers to Frequently Asked Questions
 ------------------------------------------
 
-- the library "optionally" links the 'Foundation' and 'SystemConfiguration' frameworks
+- any cliented added JSON data (key/value pairs through the UI) are added to the "aps" 
+  dictionary supplied by apple, obtained by asking the dictionary returned by the manager's
+  'didReceiveRemoteNotification:isBooting:' method
+
+- the library "optionally" links the 'Foundation' and 'SystemConfiguration' frameworks, thus
+  client apps must link to them
 
 - this SDK does not use categories on anything other than its own classes, which all use
   an "ST" prefix
@@ -67,11 +55,11 @@ Often asked questions
 
 - what is the code size of the library? There is no simple answer to this - the library (.a file)
   has architectures lipo'd into it for all valid device and simulator architectures, as well as
-  debugging information to assist clients and Sailthru resolve crashes or other issues (this
-  information would normally be stripped from a client app). A Q&A on StackOverflow shows at 
-  least one technique you can use to determine the stripped size of one architecture: 
+  debugging information to assist clients and Sailthru resolve crashes or other issues (this information
+  would normally be stripped from a client app). A Q&A on StackOverflow shows at least one technique
+  you can use to determine the stripped size of one architecture:
     http://stackoverflow.com/q/22995744/1633251
-  For the 3.2.7 library, arm64, the size is about 160,000 bytes.
+  For the 3.3.0 library, arm64, the size is about 160,000 bytes.
 
 
 Process to First Incorporate this SDK
@@ -278,6 +266,36 @@ The mutable dictionary would contain an array of log messages, which means the c
 needs to maintain a mutable array with say up to 25 messages, and as new log messages arrive, delete the first (oldest)
 and replace it with the newer one. On a crash, if you immediately report, the array will be current. If you don't
 report until the next launch, then save the log array to a file, and reload it at launch.
+
+
+Prior Version Changes:
+---------------
+- 3.2.7
+  * Namespaced 'kReachabilityChangedNotification' to 'STkReachabilityChangedNotification'
+- 3.2.6
+  * Changes to the README, and first release available on the web.
+  * Removed "optional" link to "Core Location" (previous Xcode required for use of CLLocation.h)
+- 3.2.5
+  * STManager.h makes extensive use of doxygen now that Xcode 5 uses it for command
+	completion and Quick Help (Option-tap a method)
+  * appended info on how Sailthru processes tags to this document, and a link
+  * new "version" method in STManager, will currently return @"3.2.5"
+  * resolved an issue causing some anonymous registrations to fail
+  * the SDK previously used two files, now just one
+  * all data stored in the single file now completely encrypted (tags and URLs, etc)
+  * all network transmission now uses HTTPS
+  * a few methods were deprecated - please switch to the indicated replacement
+- 3.2.0 - 3.2.2
+  * increased error checking for several input parameters
+  * tuned iOS7 networking code
+- 3.1.0
+  * small bugs fixes, address Xcode warnings
+- 3.0.0
+  * added methods to access the Sailthru Recommendation service
+- 2.0.0
+  * an iOS 7.0 library was added. The primary difference between it and the iOS6 library is that 
+  it uses the new NSURLSession instead of NSURLConnection (but does not do background transmission).
+  * the iOS5.1 library was pulled. If anyone really needs it, just ask and we'll re-enable it for you.
 
 
   Copyright (c) 2014 Sailthru, Inc. All rights reserved.

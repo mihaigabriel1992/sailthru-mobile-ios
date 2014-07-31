@@ -28,14 +28,19 @@
 
 // Common factory methods.
 
-// - an event with a list of interesting tags
+// - an event with a list of interesting tags and an optional location
 + (STEvent *)eventWithTags:(NSArray *)tags;	// Event with just tags
-+ (STEvent *)eventWithTags:(NSArray *)tags location:(CLLocationCoordinate2D)location; // "tags" are required, URL optional
++ (STEvent *)eventWithTags:(NSArray *)tags location:(CLLocationCoordinate2D)location;
 
-// - a typed event with optional URL and location.
+// - a typed event with URL and optional location.
 // NOTE: URLs may get spidered to other users - they are not just local to the current user.
 + (STEvent *)eventWithURL:(NSString *)url; 
-+ (STEvent *)eventWithURL:(NSString *)url location:(CLLocationCoordinate2D)location; // name is required, URL optional
++ (STEvent *)eventWithURL:(NSString *)url location:(CLLocationCoordinate2D)location;
+
+// - an event with a list of interesting tags, a URL, and an optional location
++ (STEvent *)eventWithTags:(NSArray *)tags URL:(NSString *)url;	// Event tags and a URL
++ (STEvent *)eventWithTags:(NSArray *)tags URL:(NSString *)url location:(CLLocationCoordinate2D)location;
+
 
 /**
  Add one tag to an existing tag-style event

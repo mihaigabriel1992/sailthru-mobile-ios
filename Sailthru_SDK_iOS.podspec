@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name                  = 'Sailthru_SDK_iOS'
   s.license               = { :type => 'Apache License, Version 2.0', :file => 'LICENSE.txt' }
-  s.version               = '3.3.0'
+  s.version               = '3.3.5'
   s.summary               = 'Supports Sailthru Push Notifications and Analytics.'
   s.homepage              = 'https://github.com/sailthru/sailthru-mobile-ios'
   s.author                = { 'Sailthru, Inc' => 'mobile@sailthru.com' }

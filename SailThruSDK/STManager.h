@@ -12,8 +12,11 @@
 typedef enum {
 	STEAnonIdentifier=1,	///< An anonymous account—no email yet
 	STEMailIdentifier		///< Parameter will be an email address in the familiar 'name@@account' format
-} STUserIdentifier;
-
+} STUserIdentifier			__attribute__((deprecated("Use 'STUser' (Swift Friendly)")));
+typedef NS_ENUM(NSInteger, STUser) {
+   STUserTypeAnon=1,
+   STUserTypeMail,
+};
 /**
  Tracking information is tagged with the Push ID until the app backgrounds,
  a time period is exceeded, or your app removes the tagging explicitly.
@@ -26,12 +29,25 @@ typedef enum {
 	st24hours,				///< One day
 
 	stPushNotePerEnd		///< just marks the end of the enumeration
-} STPushNotePersistence;
+} STPushNotePersistence		__attribute__((deprecated("Use 'STPushNotePersist' (Swift Friendly)")));
+typedef NS_ENUM(NSInteger, STPushNotePersist) {
+   STPushNotePersistUntilBackgrounded=0,
+   STPushNotePersistFor05Minutes,
+   STPushNotePersistFor15Minutes,
+   STPushNotePersistFor60Minutes,
+   STPushNotePersistFor24Hours,
+
+   STPushNotePersistEnumEnd
+};
 
 typedef enum {
 	stDevelopmentMode,		// Development APNS
 	stProductionMode		// Production APNS
-} STPushNoteMode;
+} STPushNoteMode			__attribute__((deprecated("Use 'STSDKMode' (Swift Friendly)")));
+typedef NS_ENUM(NSInteger, STSDKMode) {
+   STSDKModeDevelopement,
+   STSDKModeProduction,
+};
 
 /**
  Allows the Sailthru SDK to advise you of various events.
@@ -106,11 +122,12 @@ typedef enum {
  has nothing to recommend, an error indication is generated (not an empty items array).
 
 
- The recommendation Service is relatively new API and additional keys may appear.
+ The recommendation Service is relatively new API and additional keys in the returned data may appear at any time.
 */
 - (void)recommendations:(NSArray *)items error:(NSError *)error;
 
 @end
+
 
 @interface STManager : NSObject
 
@@ -171,16 +188,19 @@ typedef enum {
  reminder delegate message by sending the registeration message
  with a @c nil token—all other parameters are ignored. You might want to do this, for instance, during development.
 */
-- (BOOL)registerUsingMode:(STPushNoteMode)apnsMode horizonDomain:(NSString *)domain apiKey:(NSString *)apiKey appID:(NSString *)appID userIDtype:(STUserIdentifier)usertype userID:(NSString *)uid token:(NSData *)token;
+- (BOOL)registerUsingMode:(STPushNoteMode)apnsMode horizonDomain:(NSString *)domain apiKey:(NSString *)apiKey appID:(NSString *)appID userIDtype:(STUserIdentifier)usertype userID:(NSString *)uid token:(NSData *)token
+  __attribute__((deprecated("Uses old enumerations")));
+- (BOOL)registerUsingSDKMode:(STSDKMode)apnsMode horizonDomain:(NSString *)domain apiKey:(NSString *)apiKey appID:(NSString *)appID userIDtype:(STUser)usertype userID:(NSString *)uid token:(NSData *)token;
 
 /** 
  The App must notify the SDK when Sailthru generated push notifications are received.
  @param userInfo The dictionary containing the full push payload.
  @param isBooting If @a YES, this push launched the app.
- @returns The input parameter @a userInfo, unmodified.
+ @returns The input parameter @a userInfo with an additional 'json' keyed dictionary if
+ the notification contains a client provided JSON dictionary (key/value pairs through the Sailthru UI)
  @note If the notification came from Sailthru, an identifier is extracted from the dictionary, 
- which is used to tag subsequent events—otherwise nothing changes.
- The return value may change in the future with @e Rich @e Push.
+ which is used to tag subsequent events. If the notification is from another service, the dictionary
+ is returned exactly as it was supplied.
 */
 - (NSDictionary *)didReceiveRemoteNotification:(NSDictionary *)userInfo isBooting:(BOOL)booting;
 
@@ -192,14 +212,15 @@ typedef enum {
  @param behavior An enumerated lists of events or time expiration that define when tagging stops.
  The default is @a stUntilBackgrounded.
 */
-- (void)setEventTaggingBehavior:(STPushNotePersistence)behavior;
+- (void)setEventTaggingBehavior:(STPushNotePersistence)behavior __attribute__((deprecated("Uses old enumerations")));
+- (void)useEventTaggingBehavior:(STPushNotePersist)behavior;
 
 
 /**
  Convenience method to determine the current tagging behavior.
- @returns One of the @a STPushNotePersistence enumerated values.
+ @returns One of the @a STPushNotePersist enumerated values.
 */
-- (STPushNotePersistence)eventTaggingBehavior;
+- (STPushNotePersist)eventTaggingBehavior;	// returned value, although changed to STPushNotePersist, returns the same numeric value as before and can be cast
 
 /**
  Explictly end Push Notificatiopn tagging now.
@@ -229,12 +250,26 @@ typedef enum {
  @note This message attempts to contact Sailthru regardless of the current @a Reachability state,
  and thus if the network is unavailable you will surely get a failed response.
 
- @param tags Restrict the recommendations to the provided array of interest tags, or @a nil for no restriction.
+ @param tags Restrict the recommendations to a logical 'ANDing' of the provided array of interest tags,
+ or @a nil for no restriction.
+ 
  @param count The number of desired recommendations. The parameter is clamped to: 1 <= count <= 100
  @return @a YES if you have implemented the appropriate delegate method and this message sent on the main thread.
+ 
+ @trackingTags Optional array of tags to be added to the user profile.
+ 
+ @url An optional URL, which if provided should be a URL that the user has recently visitied.
+ Sailthru will extract interest tags from this page and possibly use those to drive recommendations (see next parameter).
+ 
+ @preferStoredTags Even though a URL was provided, prefer existing database tags over ones from the provided url.
+ If the 'url' parameter is nil, then this option has no affect.
+ 
  The recommendations are returned in a delegate message.
 */
-- (BOOL)recommend:(NSArray *)tags count:(NSUInteger)count;
+
+- (BOOL)recommendWithFilterTags:(NSArray *)filterTags count:(NSUInteger)count trackingTags:(NSArray *)trackingTags url:(NSString *)url preferStoredTags:(BOOL)preferStoredTags;
+- (BOOL)recommendWithFilterTags:(NSArray *)filterTags count:(NSUInteger)count;	// Sets trackingTags=nil, url=nil, preferSavedTags=ignored
+- (BOOL)recommend:(NSArray *)filterTags count:(NSUInteger)count __attribute__((deprecated("Use recommendWithFilterTags instead")));
 
 /**
  Path to the Documents directory, to save user important files that cannot be recreated.
