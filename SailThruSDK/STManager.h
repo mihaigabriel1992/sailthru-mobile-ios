@@ -274,8 +274,9 @@ typedef NS_ENUM(NSInteger, STSDKMode) {
 /**
  Path to the Documents directory, to save user important files that cannot be recreated.
  @returns The path as provided by the @a sharedApplication abject
+ @note Use "+ (NSString *)applicationDocumentsDirectory { return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject]; }
 */
-+ (NSString *)applicationDocumentsDirectory;
++ (NSString *)applicationDocumentsDirectory __attribute__((deprecated("Will be removed next release")));
 
 /**
  Path to the Application Support directory, to save app created files.
