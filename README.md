@@ -9,11 +9,12 @@ If you just happened on this site, you can discover how Sailthru can can address
 
 ## Contents
 
-1. README - this file
-2. LICENSE - all content in this repository is released under the Apache Version 2 License
-3. SailthruSDKdemoManual - contains a sample project that demonstrates how to link the SDK manually into an app
-4. SailthruSDK - the SDK header files, and two static libraries, one for iOS6 and one for iOS7. Please use the latest possible version for your app.
-5. SailthruSDKdemoPods - contains a sample project that uses Cocopods—it has a Podfile, and uses the Cocoapods public repository to retrieve and load the SDK. Note that the SailthruSDK.podspec file contains subspecs, with the default subspec being iOS7 but the linkage for iOS6 too.
+1. README (This file)- High level overview of the SDK Library 
+2. [SailThruSDK/README] - Core Library README. Including FAQ, Version changes and implementation details 
+3. LICENSE - all content in this repository is released under the Apache Version 2 License
+4. SailthruSDKdemoManual - contains a sample project that demonstrates how to link the SDK manually into an app
+5. SailthruSDK - the SDK header files, and two static libraries, one for iOS6 and one for iOS7. Please use the latest possible version for your app.
+6. SailthruSDKdemoPods - contains a sample project that uses Cocopods—it has a Podfile, and uses the Cocoapods public repository to retrieve and load the SDK. Note that the SailthruSDK.podspec file contains subspecs, with the default subspec being iOS7 but the linkage for iOS6 too.
 
 If you have not heard about [CocoaPods](http://cocoapods.org) before, it's an open source system by which users can better manage the inclusion of mutiple external libraries or open source code.
 
