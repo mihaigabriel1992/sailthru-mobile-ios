@@ -54,6 +54,18 @@ or for the iOS6 version:
 
 The SDK supports a **version** method, so you can verify in your code that in fact you've retrieved the desired distribution release.
 
+## Deep Linking
+
+Sailthru provides the ability for your push campaigns to set key/value pairs—both strings—along with the alert text. To achieve a 'deep-link', your app needs the ability to translate a key/value into a series of actions so that it can present an appropriate view when the user taps on the notification.
+
+For example, if your app uses a REST interface, and uses 'product_id' to uniquely identify products, the notification could include a key/value pair such as '{ "product_id": "20134" }' in addition to the alert message of 'You should love this great new widget!'. 
+
+When your app finds this particular key/value pair, it would first see if the product '20134' was currently cached within the app, and if so, navigate to a view that displays it prior to showing any UI. Otherwise, it could pop a spinner, inform the user in a HUD that it's retrieving that product, then show it once received. If plain product numbers don't make sense in your app, then send it a URL to something that's actionable within the app.
+
+To avoid popping spinners, you can use 'silent' push notifications (ones with no alert text) that inform the app of potential products that may be included in a subsequent alert-style notification; the app would then use background fetch to retrieve and store them. 
+
+Alternately, always use 'silent' push notifications, include the alert text as a key/value pair, and when your app has retrieved the relevant information it can pop a local notification that to the user looks no different than a remote one.
+
 ## Notes
 
 Brenden Mulligan, co-founder and designer at **Cluster**, [documented the approach](http://techcrunch.com/2014/04/04/the-right-way-to-ask-users-for-ios-permissions/) on **TechCrunch** that his company uses to increase the percentage of users who allow push notifications etc. Definitely worth a read!
