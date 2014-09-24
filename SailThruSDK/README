@@ -44,39 +44,24 @@ Q: What are the most common problems integrating the Sailthru SDK?
 A: First, uploading push certificates with passwords. Secondly,
    forgetting to add the "-ObjC" flag to the linker (step 3 below).
 
-Q: How do I obtain the key/value data that I added to my Push Notification?
-A: Client added JSON data (key/value pairs through the UI), when attached, are moved as a dictionary
-   to the top level dictionary with a key of "json", and are thus a peer toe the Apple supplied "aps"
-   dictionary. The modified dictionary is then returned by the manager's
-   'didReceiveRemoteNotification:isBooting:' method
+Q: How can I test that Push Notifictaions are functional?
+A: You can use API Test on my.sailthru.com. Documentation is found on gettingstarted.sailthru.comm,
+   go to Documentation -> Products -> Smart Data Mobile
 
-Q: What does the key/value data look like?
-A: Here's a sample of the raw push notifications from apple:
-<code>
- aps =    {
+Q: How do I obtain the key/value data included contained in Push Notification?
+A: Client added JSON data (key/value pairs), when provided, get added to the 'aps' dictionary with
+   a 'json' key, and returned by 'didReceiveRemoteNotification:isBooting:'. Both keys and values are
+   NSStrings, even if numeric. For example:
+   {
+    aps = {
        alert = "Howdie Partner!";
-   };
-   st =    {
-       i =        {
-           "key_1" = "value_1";
-           "key_2" = "value_2";
-       };
-       m = 5422e1d69759100820b1ba69;
-   };
-}
-</code>
-
-A: Here's a sample of the SDK processed notification:
-<code>
-   aps =    {
-       alert = "Howdie Partner!";
-   };
-   json =    {
-       "key_1" = "value_1";
-       "key_2" = "value_2";
-   };
-}
-</code>
+    };
+    json =    {
+       "key" = "value";
+       "2" = "55";        // Strings!
+    };
+   }
+  }
 
 Q: Does the SDK hard link to system frameworks, and if not, which ones must my app add?
 A: The library "optionally" links the 'Foundation' and 'SystemConfiguration' frameworks, thus
