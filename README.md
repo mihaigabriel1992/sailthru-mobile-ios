@@ -77,12 +77,13 @@ A: Yes - the SDK (iOS7+ version) works properly with no changes. Also, you can m
    source files.
 
 Q: How can I test that Push Notifictaions are functional?
-A: You can use API Test on my.sailthru.com. Documentation is found on [docs.sailthru.com](http://docs.sailthru.com/documentation/products/mobile-push-notification-sending),
+A: You can use API Test on my.sailthru.com. Documentation is found on [docs.sailthru.com](http://docs.sailthru.com/documentation/products/mobile-push-notification-sending)
 
 Q: How do I obtain the key/value data included contained in Push Notification?
 A: Client added JSON data (key/value pairs), when provided, get added to the 'aps' dictionary with
    a 'json' key, and returned by 'didReceiveRemoteNotification:isBooting:'. Both keys and values are
    NSStrings, even if numeric. For example:
+<code>
     {
      aps = {
            alert = "Howdie Partner!";
@@ -92,6 +93,7 @@ A: Client added JSON data (key/value pairs), when provided, get added to the 'ap
         "2" = "55";        // Strings!
      };
     }
+</code>
 
 Q: What versions will you support now that iOS8 is GA?
 A: The SDK will contain a single library in the iOS7+ directory (iOS6 support will be dropped).
