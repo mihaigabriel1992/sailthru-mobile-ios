@@ -67,6 +67,84 @@ To avoid popping spinners, you can use 'silent' push notifications (ones with no
 
 Alternately, always use 'silent' push notifications, include the alert text as a key/value pair, and when your app has retrieved the relevant information it can pop a local notification that to the user looks no different than a remote one.
 
+## FAQ
+
+Answers to Frequently Asked Questions
+------------------------------------------
+
+Q: Have you tested with iOS8?
+A: Yes - the SDK (iOS7+ version) works properly with no changes. Also, you can message the SDK from Swift
+   source files.
+
+Q: How can I test that Push Notifictaions are functional?
+A: You can use API Test on my.sailthru.com. Documentation is found on [docs.sailthru.com](http://docs.sailthru.com/documentation/products/mobile-push-notification-sending),
+
+Q: How do I obtain the key/value data included contained in Push Notification?
+A: Client added JSON data (key/value pairs), when provided, get added to the 'aps' dictionary with
+   a 'json' key, and returned by 'didReceiveRemoteNotification:isBooting:'. Both keys and values are
+   NSStrings, even if numeric. For example:
+    {
+     aps = {
+           alert = "Howdie Partner!";
+     };
+     json =    {
+        "key" = "value";
+        "2" = "55";        // Strings!
+     };
+    }
+
+Q: What versions will you support now that iOS8 is GA?
+A: The SDK will contain a single library in the iOS7+ directory (iOS6 support will be dropped).
+
+Q: What are the most common problems integrating the Sailthru SDK?
+A:
+ - uploading push certificates with passwords
+ - forgetting to add the "-ObjC" flag to the linker (step 3 below)
+ - not passing the correct "mode" and/or "appID" in the registration message
+
+Q: How do I obtain the key/value data that I added to my Push Notification?
+A: Client added JSON data (key/value pairs through the UI), when attached, are moved as a dictionary
+   to the top level dictionary with a key of "json", and are thus a peer toe the Apple supplied "aps"
+   dictionary. The modified dictionary is then returned by the manager's
+   'didReceiveRemoteNotification:isBooting:' method
+
+Q: Does the SDK hard link to system frameworks, and if not, which ones must my app add?
+A: The library "optionally" links the 'Foundation' and 'SystemConfiguration' frameworks, thus
+   client apps must link to SystemConfiguration if not already doing so.
+
+Q: Does the SDK add categories to any of the standard Foundation classes?
+A: No, the SDK does not use categories on anything other than its own classes.
+
+Q: Does the SDK pollute my app's namespace with classes other than "ST..." prefixed classes?
+A: No.
+
+Q: Do you use AFNetworking, or other frequently used Open Source software?
+A: Every line of code in the SDK is under our control - while we do use Apple's Reachability source,
+   the Reachability class is (now) prefixed with 'ST'.
+
+Q: Does the SDK use the iOS file system?
+A: Yes, it mostly uses a single file but could create a second temporarily, saved in the
+   "Application Support" folder (path obtained from NSSearchPathForDirectoriesInDomains), and marks
+   both with the "Do Not Backup" attribute and the data is encrypted.
+
+Q: Does the app ever use HTTP?
+A: No, it only uses HTTPS.
+
+Q: Does the .a file include symbols?
+A: Yes, the app contains all symbols (to better guide crash analysis in the remote chance encounter
+   an exception in our software). If you strip your app or create a separate symbol file the library
+   symbols are managed by Xcode the same way.
+
+Q: What is the code size of the library?
+A: There is no simple answer to this - the library (.a file) has architectures lipo'd into it for all
+   valid device and simulator architectures, and contains the full symbol table to assist in exception
+   resolution. A Q&A on StackOverflow shows at least one technique  you can use to determine the
+   stripped size of one architecture: http://stackoverflow.com/q/22995744/1633251
+   For the 3.3.0 library, arm64, the size is about 125,000 bytes (TEXT+DATA)
+
+Q: What does Sailthru mean when it deprecates something?
+A: That feature will be gone in the next release.
+
 ## Notes
 
 Brenden Mulligan, co-founder and designer at **Cluster**, [documented the approach](http://techcrunch.com/2014/04/04/the-right-way-to-ask-users-for-ios-permissions/) on **TechCrunch** that his company uses to increase the percentage of users who allow push notifications etc. Definitely worth a read!
