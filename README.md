@@ -83,15 +83,17 @@ Q: How do I obtain the key/value data included contained in Push Notification?
 A: Client added JSON data (key/value pairs), when provided, get added to the 'aps' dictionary with
    a 'json' key, and returned by 'didReceiveRemoteNotification:isBooting:'. Both keys and values are
    NSStrings, even if numeric. For example:
-    {
-     aps = {
-           alert = "Howdie Partner!";
-     };
-     json =    {
-        "key" = "value";
-        "2" = "55";        // Strings!
-     };
-    }
+```json
+{
+ aps = {
+   alert = "Howdie Partner!";
+ };
+ json =    {
+    "key" = "value";
+    "2" = "55";        // Strings!
+ };
+}
+```
 
 
 Q: What versions will you support now that iOS8 is GA?
