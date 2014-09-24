@@ -45,7 +45,7 @@ A: First, uploading push certificates with passwords. Secondly,
    forgetting to add the "-ObjC" flag to the linker (step 3 below).
 
 Q: How can I test that Push Notifictaions are functional?
-A: You can use API Test on my.sailthru.com. Documentation is found on gettingstarted.sailthru.comm,
+A: You can use API Test on my.sailthru.com. Documentation is found on gettingstarted.sailthru.com,
    go to Documentation -> Products -> Smart Data Mobile
 
 Q: How do I obtain the key/value data included contained in Push Notification?
