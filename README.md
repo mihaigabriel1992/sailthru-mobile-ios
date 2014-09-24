@@ -84,15 +84,25 @@ A: Client added JSON data (key/value pairs), when provided, get added to the 'ap
    a 'json' key, and returned by 'didReceiveRemoteNotification:isBooting:'. Both keys and values are
    NSStrings, even if numeric. For example:
 <code>
+
     {
+
      aps = {
+
            alert = "Howdie Partner!";
+
      };
+
      json =    {
+
         "key" = "value";
+
         "2" = "55";        // Strings!
+
      };
+
     }
+
 </code>
 
 Q: What versions will you support now that iOS8 is GA?
