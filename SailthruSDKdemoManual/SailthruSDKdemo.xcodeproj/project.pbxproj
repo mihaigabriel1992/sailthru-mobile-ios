@@ -370,6 +370,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: David Hoerl (748Z47NBAH)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SailthruSDKdemo/SailthruSDKdemo-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = DEPLOYMENT;
 				INFOPLIST_FILE = "SailthruSDKdemo/SailthruSDKdemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";

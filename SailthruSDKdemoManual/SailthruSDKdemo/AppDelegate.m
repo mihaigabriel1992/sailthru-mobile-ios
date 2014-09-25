@@ -88,7 +88,7 @@ static NSData __attribute__((unused)) *hexToData(NSString *str)
 
 // We really suggest using this strategy. Set a build flag so when building for the app store you
 // have the proper options set.
-#ifdef DEPLOYMENT
+#ifdef DEPLOYMENT					// See the Target build setting, Preprocessing
 	STSDKMode apnsMode = STSDKModeProduction;
 	NSString *appID		= @"1234567890ABCD";			// the string returned by Sailthru when you register your app
 #else
