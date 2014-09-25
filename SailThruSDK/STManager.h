@@ -126,6 +126,15 @@ typedef NS_ENUM(NSInteger, STSDKMode) {
 */
 - (void)recommendations:(NSArray *)items error:(NSError *)error;
 
+/**
+ Sent immediately after the delegate 'registrationSucceeded:error; message, but only
+ if the registration succeeded.
+ @param hid - A Sailthru user identifier that can be used for targetted notifications 
+ during SDK integration and testing.
+  @note This method provided solely for app testing during development.
+ */
+- (void)registeredWithHID:(NSString *)hid;
+
 @end
 
 
@@ -189,15 +198,16 @@ typedef NS_ENUM(NSInteger, STSDKMode) {
  with a @c nil token—all other parameters are ignored. You might want to do this, for instance, during development.
 */
 - (BOOL)registerUsingMode:(STPushNoteMode)apnsMode horizonDomain:(NSString *)domain apiKey:(NSString *)apiKey appID:(NSString *)appID userIDtype:(STUserIdentifier)usertype userID:(NSString *)uid token:(NSData *)token
-  __attribute__((deprecated("Uses old enumerations")));
+  __attribute__((deprecated("Use registerUsingSDKMode (Swift Friendly)")));
 - (BOOL)registerUsingSDKMode:(STSDKMode)apnsMode horizonDomain:(NSString *)domain apiKey:(NSString *)apiKey appID:(NSString *)appID userIDtype:(STUser)usertype userID:(NSString *)uid token:(NSData *)token;
 
 /** 
  The App must notify the SDK when Sailthru generated push notifications are received.
  @param userInfo The dictionary containing the full push payload.
  @param isBooting If @a YES, this push launched the app.
- @returns The input parameter @a userInfo with an additional 'json' keyed dictionary if
- the notification contains a client provided JSON dictionary (key/value pairs through the Sailthru UI)
+ @returns The input parameter @a userInfo with an additional object added to it, using a key of'json'.
+ If there, this is a NSDictionary of the client provided key/value pairs supplied to to Sailthru.
+ Both keys and values are NSStrings.
  @note If the notification came from Sailthru, an identifier is extracted from the dictionary, 
  which is used to tag subsequent events. If the notification is from another service, the dictionary
  is returned exactly as it was supplied.
@@ -212,7 +222,7 @@ typedef NS_ENUM(NSInteger, STSDKMode) {
  @param behavior An enumerated lists of events or time expiration that define when tagging stops.
  The default is @a stUntilBackgrounded.
 */
-- (void)setEventTaggingBehavior:(STPushNotePersistence)behavior __attribute__((deprecated("Uses old enumerations")));
+- (void)setEventTaggingBehavior:(STPushNotePersistence)behavior __attribute__((deprecated("Paramter now STPushNotePersist")));
 - (void)useEventTaggingBehavior:(STPushNotePersist)behavior;
 
 
@@ -269,14 +279,14 @@ typedef NS_ENUM(NSInteger, STSDKMode) {
 
 - (BOOL)recommendWithFilterTags:(NSArray *)filterTags count:(NSUInteger)count trackingTags:(NSArray *)trackingTags url:(NSString *)url preferStoredTags:(BOOL)preferStoredTags;
 - (BOOL)recommendWithFilterTags:(NSArray *)filterTags count:(NSUInteger)count;	// Sets trackingTags=nil, url=nil, preferSavedTags=ignored
-- (BOOL)recommend:(NSArray *)filterTags count:(NSUInteger)count __attribute__((deprecated("Use recommendWithFilterTags instead")));
+- (BOOL)recommend:(NSArray *)filterTags count:(NSUInteger)count __attribute__((deprecated("Use recommendWithFilterTags (Swift Friendly)")));
 
 /**
  Path to the Documents directory, to save user important files that cannot be recreated.
  @returns The path as provided by the @a sharedApplication abject
  @note Use "+ (NSString *)applicationDocumentsDirectory { return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject]; }
 */
-+ (NSString *)applicationDocumentsDirectory __attribute__((deprecated("Will be removed next release")));
++ (NSString *)applicationDocumentsDirectory __attribute__((deprecated("Will be removed soon")));
 
 /**
  Path to the Application Support directory, to save app created files.

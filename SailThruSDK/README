@@ -1,8 +1,8 @@
 
 Sailthru's iOS SDK for Push Notifications and User Tracking
-Version 3.3.5
+Version 3.4.0
 
-August 11, 2014
+September 25, 2014
 ----------------------------------------------
 
 First time SDK users should first read the "Process to First Incorporate this SDK" section,
@@ -13,6 +13,13 @@ target.
 
 Version Changes:
 ---------------
+- 3.4.0
+  * Resolved a race condition that may cause Push Notification "Open" messages to Sailthru to not succeed
+  * New optional delegate method returns the Sailthru 'HID', to assist in testing
+    push notifications to anonymous users
+  * Deprecated STLog threshold enumeration 'stLogType', now Swift usable format 'STLogType'
+  * Removed the iOS6 library as iOS8 is GA. Only one binary for iOS7+ is now provided.
+
 - 3.3.5
   * Support for the client-supplied key/values attached to Push Notifications
   * Recommendations offers more options
@@ -21,14 +28,7 @@ Version Changes:
   * New Event type accepts both tags and a single URL
   * Enumerations changed to fit into a Swift usable format, older ones deprecated
 
-- 3.3.0
-  * Improved Anonymous -> Email -> Anonymous -> Email registration handling
-  * Properly handle to back-to-back registration messages
-  * General code improvements, hardening, and additional logging messages
-  * Instructions on appending crash reports with Sailthru log info (bottom of this file)
-
 [Prior version history moved to the bottom of this file.]
-
 
 Process to First Incorporate this SDK
 -------------------------------------
@@ -38,7 +38,8 @@ Process to First Incorporate this SDK
    You will need to provide the push certifcate (in .p12 format), 
    your app's bundleID, and select "dev" or "prod" (telling 
    Sailthru which APNS to use). Sailthru returns an "app_id", which
-   you must supply to the SDK along with your "api_key".
+   you must supply to the SDK along with your "api_key". When exporting your
+   certificate do not enter a passeword - just click on OK.
    
    Note that you will most likely register your app twice: once for
    development (using the dev APNS), and once for the App Store release
@@ -50,10 +51,9 @@ Process to First Incorporate this SDK
    
 2) Incorporate the SDK into your App.
 
-   The SDK is provided as a library with header files, one for iOS 6.0 and one 
-   for 7.0. Newer libraries use newer more efficient APIs, so please use the 
-   version applicable for your "Deployment" target. You copy it out of the 
-   SailthruSDKdemo folder into your project.
+   The SDK is provided as a library with header files: currently there is one version
+   for use with iOS7 or newer (works fine with iOS8). You copy it out of the
+   SailthruSDK/ios7+ folder into your project.
 
 3) Instantiate the STManager object and register your app.
 
@@ -92,12 +92,12 @@ Process to First Incorporate this SDK
    for Development, so you cannot accidentally build using the incorrect information.
 
    #ifdef DEPLOYMENT
-     STPushNoteMode apnsMode = stProductionMode;
-	 NSString *appID = @"....";
+     STSDKMode apnsMode = STSDKModeProduction;
+     NSString *appID    = @"1234567890ABCD";            // the string returned by Sailthru when you register your app
    #else
-     STPushNoteMode apnsMode = stDevelopmentMode;
-	 NSString *appID = @"....";
-	 #warning Sailthru Registration using Development Mode.
+     STSDKMode apnsMode = STSDKModeDevelopement;
+     NSString *appID    = @"DCBA9876543210";           // the string returned by Sailthru when you register your app
+     #warning Sailthru Registration using Development Mode.	// nice trick for Development builds.
    #endif
 
 Notes:
@@ -122,7 +122,7 @@ c) Apple has some great material to assist in debugging push notification proble
    ask your Account Manager for a copy.
 
 
-Process to First Incorporate this SDKHow to Incorporate the SailthruSDK in your App
+Process to First Incorporate this SDK
 ----------------------------------------------
 
 1) Copy the SailthruSDK folder to the app folder, which contains the ".xcodeproj" project file,
@@ -236,8 +236,18 @@ and replace it with the newer one. On a crash, if you immediately report, the ar
 report until the next launch, then save the log array to a file, and reload it at launch.
 
 
+Documentation at Sailthru Relative to Mobile:
+
+- Various techniques for sending Push Notifications:
+  http://docs.sailthru.com/documentation/products/mobile-push-notification-sending
+
 Prior Version Changes:
 ---------------
+- 3.3.0
+  * Improved Anonymous -> Email -> Anonymous -> Email registration handling
+  * Properly handle to back-to-back registration messages
+  * General code improvements, hardening, and additional logging messages
+  * Instructions on appending crash reports with Sailthru log info (bottom of this file)
 - 3.2.7
   * Namespaced 'kReachabilityChangedNotification' to 'STkReachabilityChangedNotification'
 - 3.2.6

@@ -1,8 +1,4 @@
-# ios7
+# ios7+
 platform :ios, '7.0'
-pod 'Sailthru_SDK_iOS/ios7', '~> v3.3.5'
+pod 'Sailthru_SDK_iOS/ios7+', '~> v3.4.0'
 #pod 'SailthruSDK', :path => '/Volumes/Data/gitst/sailthru-ios-sdk/Sailthru_SDK_iOS.podspec' # internal testing
-
-# ios6
-#platform :ios, '6.0'
-#pod 'Sailthru_SDK_iOS/ios6', '~> v3.3.5'

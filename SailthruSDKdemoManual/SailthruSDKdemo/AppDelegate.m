@@ -10,7 +10,9 @@
 
 #import "ViewController.h"
 
-
+// These routines here only for this demo - you do not need this code in your app.
+// Since this app cannot really get a push token, it converts a real one we got during texting,
+// saved as a string - but the SDK needs the token as a NSData object, just as iOS delivers it.
 static NSString __attribute__((unused)) *dataToHex(NSData *data)
 {
     NSMutableString *str    = [NSMutableString stringWithCapacity:100];
@@ -22,7 +24,7 @@ static NSString __attribute__((unused)) *dataToHex(NSData *data)
     
     return [str copy];
 }
- 
+
 static NSData __attribute__((unused)) *hexToData(NSString *str)
 {
     const char *ptr     = [str cStringUsingEncoding:NSASCIIStringEncoding];
@@ -57,7 +59,7 @@ static NSData __attribute__((unused)) *hexToData(NSString *str)
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	stManager = [STManager sailthruManagerWithDelegate:self];
-	stSetLogThreshold(stInformative);	// the default is stCritical, set it to informative to see what the SDK is doing
+	stSetLogThreshold(STLogTypeInformative);	// the default is stCritical, set it to informative to see what the SDK is doing
 	
 	NSDictionary *pushDict =launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
 	[self handlePushNotification:pushDict isBooting:YES];	// handles case of null push dictionary
@@ -83,35 +85,32 @@ static NSData __attribute__((unused)) *hexToData(NSString *str)
 
 	UIAlertView *v = [[UIAlertView alloc] initWithTitle:@"Token Received!" message:@"Its on the clipboard - paste it into a mail to yourself" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 	[v show];
+
+// We really suggest using this strategy. Set a build flag so when building for the app store you
+// have the proper options set.
+#ifdef DEPLOYMENT
+	STSDKMode apnsMode = STSDKModeProduction;
+	NSString *appID		= @"1234567890ABCD";			// the string returned by Sailthru when you register your app
+#else
+	STSDKMode apnsMode = STSDKModeDevelopement;
+	NSString *appID		= @"DCBA9876543210";			// the string returned by Sailthru when you register your app
+	#warning Sailthru Registration using Development Mode.	// nice trick for Development builds - you won't see any warning in a Production build.
+#endif
 	
 	// assume you have the user's ID at this time - if not just wait til you get it
 	NSString *uid		= @"fred@gmail.com";
-	NSString *appID		= @"1234567890ABCD";			// the string returned by Sailthru when you register your app
 	NSString *domain	= @"myHorizonDomain";
 	NSString *apiKey	= @"Your Company's api_key";
 
 	// after this it will be possible to push notifications from Sailthru to the user
-	//[stManager registerUserID:user userIDtype:STEMailIdentifier token:deviceToken appID:appID horizonDomain:domain];
-	BOOL ret = [stManager registerUsingMode:stDevelopmentMode horizonDomain:domain apiKey:apiKey appID:appID userIDtype:STEMailIdentifier userID:uid token:deviceToken];
+	BOOL ret = [stManager registerUsingSDKMode:apnsMode horizonDomain:domain apiKey:apiKey appID:appID userIDtype:STUserTypeMail userID:uid token:deviceToken];
+
 	assert(ret); // in development, treat a failure here as a hard hard error!
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
 	NSLog(@"YIKES! registration failed!!! Error: %@", error);
-
-	NSString *uid		= @"fred@gmail.com";
-	NSString *appID		= @"1234567890ABCD";			// the string returned by Sailthru when you register your app
-	NSString *domain	= @"myHorizonDomain";
-	NSString *apiKey	= @"Your Company's api_key";
-	NSString *token		= @" some hard coded token obtained by running your app on a real device "; // for testing using the Simulator
-	NSData *deviceToken	= hexToData(token);
-
-	// after this it will be possible to push notifications from Sailthru to the user
-	//[stManager registerUserID:user userIDtype:STEMailIdentifier token:deviceToken appID:appID horizonDomain:domain];
-	BOOL ret = [stManager registerUsingMode:stDevelopmentMode horizonDomain:domain apiKey:apiKey appID:appID userIDtype:STEMailIdentifier userID:uid token:deviceToken];
-	assert(ret); // in development, treat a failure here as a hard hard error!
-
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
