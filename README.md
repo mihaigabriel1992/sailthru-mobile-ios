@@ -9,20 +9,20 @@ If you just happened on this site, you can discover how Sailthru can can address
 
 ## Contents
 
-1. README - this file
-2. LICENSE - all content in this repository is released under the Apache Version 2 License
-3. SailthruSDKdemoManual - contains a sample project that demonstrates how to link the SDK manually into an app
-4. SailthruSDK - the SDK header files, and two static libraries, one for iOS6 and one for iOS7. Please use the latest possible version for your app.
-5. SailthruSDKdemoPods - contains a sample project that uses Cocopods—it has a Podfile, and uses the Cocoapods public repository to retrieve and load the SDK. Note that the SailthruSDK.podspec file contains subspecs, with the default subspec being iOS7 but the linkage for iOS6 too.
+1. README (this file) - High level overview of the SDK Library 
+2. [SailThruSDK/README](SailThruSDK/README "Library Readme") - Core Library README. Including FAQ, Version changes and implementation details 
+3. LICENSE - all content in this repository is released under the Apache Version 2 License
+4. SailthruSDKdemoManual - contains a sample project that demonstrates how to link the SDK manually into an app
+5. SailthruSDK - the SDK header files and a static libraries for use with iOS7 or newer.
+6. SailthruSDKdemoPods - contains a sample project that uses Cocopods—it has a Podfile, and uses the Cocoapods public repository to retrieve and load the SDK.
 
 If you have not heard about [CocoaPods](http://cocoapods.org) before, it's an open source system by which users can better manage the inclusion of mutiple external libraries or open source code.
-
 
 Each distribution is tagged using [sematic versioning](http://semver.org) that has the form X.Y.Z. 
 
 ### Full Content
 
-1.Choose a **Release** from the GitHub release menu, which lets your retrieve a zip archive of the release, which includes every file in this repository. This archive is equivalent to older distributions that you received from your Sailthru account manager.
+1. Choose a **Release** from the GitHub release menu, which lets your retrieve a zip archive of the release, which includes every file in this repository. This archive is equivalent to older distributions that you received from your Sailthru account manager.
 
 2. Clone the proper repository version using **git**, then checkout the desired release (which is prefixed by a 'v' character). On the command line this would take the form of: 
 
@@ -43,12 +43,7 @@ within your project directory.
 
 Your **Podfile** will contain a line similar to:
 
-    pod 'Sailthru_SDK_iOS', '~> 3.2.7'  # or 'Sailthru_SDK_iOS/ios7'
-    # Note that the primary subspec points to the latest version
-
-or for the iOS6 version:
-
-    pod 'Sailthru_SDK_iOS/ios6', '~> 3.2.7'
+    pod 'Sailthru_SDK_iOS', '~> 3.4.0  # or 'Sailthru_SDK_iOS/ios7+'
     
 ## Version Verification
 
@@ -65,6 +60,80 @@ When your app finds this particular key/value pair, it would first see if the pr
 To avoid popping spinners, you can use 'silent' push notifications (ones with no alert text) that inform the app of potential products that may be included in a subsequent alert-style notification; the app would then use background fetch to retrieve and store them. 
 
 Alternately, always use 'silent' push notifications, include the alert text as a key/value pair, and when your app has retrieved the relevant information it can pop a local notification that to the user looks no different than a remote one.
+
+## FAQ
+
+Answers to Frequently Asked Questions
+------------------------------------------
+
+Q: Have you tested with iOS8?
+
+Yes - the SDK works properly with iOS7 and iOS8, and can be called from Swift code.
+
+Q: How can I test that Push Notifications are functional?
+
+You can use API Test on my.sailthru.com. Documentation is found on [docs.sailthru.com](http://docs.sailthru.com/documentation/products/mobile-push-notification-sending)
+
+Q: How do I obtain the key/value data included contained in Push Notification?
+
+Client added JSON data (key/value pairs), when provided, get added to the 'aps' dictionary with a 'json' key, and returned by *didReceiveRemoteNotification:isBooting:.* Both keys and values are NSStrings, even if numeric. For example:
+
+    {
+     aps = {
+       alert = "Howdie Partner!";
+     };
+     json =    {
+        "key" = "value";
+        "2" = "55";        // Strings!
+     };
+    }
+
+
+Q: What are the most common problems integrating the Sailthru SDK?
+
+* uploading push certificates with passwords
+* forgetting to add the *-ObjC* linker flag (step 3 below)
+* not passing the appropriate *mode* and/or *appID* in the registration message
+
+Q: How do I obtain the key/value data that I added to my Push Notification?
+
+Client added *JSON* data (key/value pairs through the UI), when attached, are moved as a dictionary to the top level dictionary with a key of *json*, and are thus a peer to the Apple supplied *aps* dictionary. The modified dictionary is then returned by the manager's *didReceiveRemoteNotification:isBooting: *method.
+
+Q: Does the SDK hard link to system frameworks, and if not, which ones must my app add?
+
+The library *optionally* links the *Foundation* and *SystemConfiguration* frameworks; thus client apps must link to *SystemConfiguration* if not already doing so.
+
+Q: Does the SDK add categories to any of the standard *Foundation* classes?
+
+No, the SDK does not add categories on anything other than its own classes.
+
+Q: Does the SDK pollute my app's namespace with classes other than *ST* prefixed classes?
+
+No.
+
+Q: Do you use *AFNetworking* or other frequently used Open Source software?
+
+Every line of code in the SDK is under our control—while we do use Apple's *Reachability* source, the *Reachability* class is (now) prefixed with *ST*.
+
+Q: Does the SDK use the iOS file system?
+
+Yes, it mostly uses a single encrypted file, saved in the *Application Support* folder (path obtained from *NSSearchPathForDirectoriesInDomains*), but may create a second temporarily file. Each gets marked with the *Do Not Backup attribute*.
+
+Q: Does the app ever use *HTTP*?
+
+No, it only uses *HTTPS*.
+
+Q: Does the *.a* file include symbols?
+
+Yes, the app contains all symbols (to better guide crash analysis in the remote chance encounter an exception in our software). If you strip your app or create a separate symbol file the library symbols are managed by *Xcode* the same way.
+
+Q: What is the code size of the library?
+
+There is no simple answer to this - the library (.a file) has architectures lipo'd into it for all valid device and simulator architectures, and contains the full symbol table to assist in exception resolution. A Q&A on StackOverflow shows [one technique](http://stackoverflow.com/q/22995744/1633251) you can use to determine the stripped size of one architecture. For the 3.3.0 library, arm64, the size is about 125,000 bytes (TEXT+DATA)
+
+Q: What does Sailthru mean when it deprecates something?
+
+That feature will likely be gone in the next release. Switch to using whatever the warning suggests.
 
 ## Notes
 
