@@ -1,0 +1,1 @@
+../../Sailthru_SDK_iOS/SailThruSDK/STManager.h

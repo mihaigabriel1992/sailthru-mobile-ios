@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D1D55B473FF04CAF9AD4849A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4FFEC1A3F454E1ABBFA47D9 /* libPods.a */; };
 		DE4EAE1717CCDE2D00061FBB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE4EAE1617CCDE2D00061FBB /* SystemConfiguration.framework */; };
 		DE8FE6C317A6BA2800DCE67F /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DE8FE6C117A6BA2800DCE67F /* Icon.png */; };
 		DE8FE6C417A6BA2800DCE67F /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DE8FE6C217A6BA2800DCE67F /* Icon@2x.png */; };
@@ -25,10 +26,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		33CD624BF3F94C9BB53F7F42 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		DE4EAE1617CCDE2D00061FBB /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		DE8FE6C117A6BA2800DCE67F /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		DE8FE6C217A6BA2800DCE67F /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		DE93099218E1D3900010473A /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		DE93099218E1D3900010473A /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		DEB5F46D1741708000674D02 /* SailthruSDKdemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SailthruSDKdemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEB5F4701741708000674D02 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DEB5F4721741708000674D02 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -46,6 +48,7 @@
 		DEB5F4891741708000674D02 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		DEB5F48C1741708000674D02 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
 		DEB5F4A5174183B800674D02 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		E4FFEC1A3F454E1ABBFA47D9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +60,7 @@
 				DEB5F4711741708000674D02 /* UIKit.framework in Frameworks */,
 				DEB5F4731741708000674D02 /* Foundation.framework in Frameworks */,
 				DEB5F4751741708000674D02 /* CoreGraphics.framework in Frameworks */,
+				D1D55B473FF04CAF9AD4849A /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +74,7 @@
 				DEB5F4761741708000674D02 /* SailthruSDKdemo */,
 				DEB5F46F1741708000674D02 /* Frameworks */,
 				DEB5F46E1741708000674D02 /* Products */,
+				33CD624BF3F94C9BB53F7F42 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -89,6 +94,7 @@
 				DEB5F4721741708000674D02 /* Foundation.framework */,
 				DEB5F4741741708000674D02 /* CoreGraphics.framework */,
 				DE4EAE1617CCDE2D00061FBB /* SystemConfiguration.framework */,
+				E4FFEC1A3F454E1ABBFA47D9 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -129,9 +135,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DEB5F4901741708000674D02 /* Build configuration list for PBXNativeTarget "SailthruSDKdemo" */;
 			buildPhases = (
+				80001DE470B64C29842217DE /* Check Pods Manifest.lock */,
 				DEB5F4691741708000674D02 /* Sources */,
 				DEB5F46A1741708000674D02 /* Frameworks */,
 				DEB5F46B1741708000674D02 /* Resources */,
+				74EED3A5B96A4835AFE6A206 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -185,6 +193,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		74EED3A5B96A4835AFE6A206 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		80001DE470B64C29842217DE /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DEB5F4691741708000674D02 /* Sources */ = {
@@ -283,6 +324,7 @@
 		};
 		DEB5F4911741708000674D02 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 33CD624BF3F94C9BB53F7F42 /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SailthruSDKdemo/SailthruSDKdemo-Prefix.pch";
@@ -299,6 +341,7 @@
 		};
 		DEB5F4921741708000674D02 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 33CD624BF3F94C9BB53F7F42 /* Pods.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: David Hoerl (748Z47NBAH)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -344,6 +387,7 @@
 		};
 		DEFA283219D48387004A2633 /* Deployment */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 33CD624BF3F94C9BB53F7F42 /* Pods.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: David Hoerl (748Z47NBAH)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

@@ -1,0 +1,2 @@
+PODS_SAILTHRU_SDK_IOS_LIBRARY_SEARCH_PATHS = $(PODS_ROOT)/Sailthru_SDK_iOS/SailThruSDK/ios7+ "$(PODS_ROOT)/Sailthru_SDK_iOS/SailThruSDK/ios7+"
+PODS_SAILTHRU_SDK_IOS_OTHER_LDFLAGS = -lSailthru -framework Foundation -framework SystemConfiguration

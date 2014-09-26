@@ -1,0 +1,12 @@
+PODS:
+  - Sailthru_SDK_iOS (3.4.0):
+    - Sailthru_SDK_iOS/ios7
+  - Sailthru_SDK_iOS/ios7 (3.4.0)
+
+DEPENDENCIES:
+  - Sailthru_SDK_iOS (~> 3.4.0)
+
+SPEC CHECKSUMS:
+  Sailthru_SDK_iOS: e054c8f98d85f167e4b6fe64c75e3bbe828ee1d1
+
+COCOAPODS: 0.33.1
