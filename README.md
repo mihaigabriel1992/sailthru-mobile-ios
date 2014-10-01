@@ -137,7 +137,9 @@ That feature will likely be gone in the next release. Switch to using whatever t
 
 ## Notes
 
-Brenden Mulligan, co-founder and designer at **Cluster**, [documented the approach](http://techcrunch.com/2014/04/04/the-right-way-to-ask-users-for-ios-permissions/) on **TechCrunch** that his company uses to increase the percentage of users who allow push notifications etc. Definitely worth a read!
+* For those of you that have both a web site and an iOS app, Apple introduced a new concept in iOS8 called *Continuity*. One aspect of that can facilitate app login, by leveraging Safari credentials. Sailthru has experimented with this technology, and we show how to do it on our [tech blog](http://www.sailthru.com/codeship/one-click-app-login-arrived-magic-continuity/).
+
+* Brenden Mulligan, co-founder and designer at **Cluster**, [documented the approach](http://techcrunch.com/2014/04/04/the-right-way-to-ask-users-for-ios-permissions/) on **TechCrunch** that his company uses to increase the percentage of users who allow push notifications etc. Definitely worth a read!
 
 
 Copyright (c) 2014 Sailthru, Inc    
