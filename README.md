@@ -29,6 +29,23 @@ Each distribution is tagged using [sematic versioning](http://semver.org) that h
     $ git clone https://github.com/sailthru/sailthru-mobile-ios.git
     $ git checkout tags/vX.Y.Z # X.Y.Z, or just don't run this command to get the latest
 
+####Supported Features
+The Sailthru iOS SDK provides:
+*  User registration
+*  Anonymous user support 
+*  Profile data acquisition
+    *   App usage date & time
+    *   URLs visited
+    *   Tags viewed
+    *   Geolocation 
+*  Recommendation delivery 
+*  Push Notifications
+    *  Badge & Sound support
+    *  Deep Linking support
+    *  Rich push notification (pushing data along with an alert) support
+    *  Silent push notification (pushing data without an alert) support
+
+
 ### CocoaPods
 
 If you haven't heard of [CocoaPods](cocoapods.org) before, you can learn about it by browsing their site or reading the [RayWenderlich](http://www.raywenderlich.com/12139/introduction-to-cocoapods) and [Bart Jacobs](http://code.tutsplus.com/tutorials/streamlining-cocoa-development-with-cocoapods--mobile-15938) tutorials. In a nutshell, **CocoaPods** lets you integrate multiple external libraries or open source projects into your primary project, and maintain them as they morph over time.
