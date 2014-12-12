@@ -2,8 +2,8 @@
 Sailthru's iOS SDK for Push Notifications and User Tracking
 Version 3.4.0
 
-September 25, 2014
-----------------------------------------------
+December 12, 2014
+------------------
 
 First time SDK users should first read the "Process to First Incorporate this SDK" section,
 then "How to Incorporate the SailthruSDK in your App". If just updating, please use
@@ -13,20 +13,11 @@ target.
 
 Version Changes:
 ---------------
-- 3.4.0
-  * Resolved a race condition that may cause Push Notification "Open" messages to Sailthru to not succeed
-  * New optional delegate method returns the Sailthru 'HID', to assist in testing
-    push notifications to anonymous users
-  * Deprecated STLog threshold enumeration 'stLogType', now Swift usable format 'STLogType'
-  * Removed the iOS6 library as iOS8 is GA. Only one binary for iOS7+ is now provided.
-
-- 3.3.5
-  * Support for the client-supplied key/values attached to Push Notifications
-  * Recommendations offers more options
-  * The documentation for 'recommendations' incorrectly stated that the values in the 'tags' array 
-    were logically ORed by Sailthru; they are logically ANDed
-  * New Event type accepts both tags and a single URL
-  * Enumerations changed to fit into a Swift usable format, older ones deprecated
+- 3.5.0
+  * Provided proper Swift signature for a few STManager delegate methods
+  * Can now request recommendations in response to a silent push notification (in background)
+  * STLog warning if app set to Production, but appears to be running in development mode
+    (would be impossible for app to receive push notifications from Sailthru)
 
 [Prior version history moved to the bottom of this file.]
 
@@ -123,7 +114,7 @@ c) Apple has some great material to assist in debugging push notification proble
 
 
 Process to First Incorporate this SDK
-----------------------------------------------
+-------------------------------------
 
 1) Copy the SailthruSDK folder to the app folder, which contains the ".xcodeproj" project file,
    then add the directory to your project, but don't add it to any targets (unselect the checkbox).
@@ -152,7 +143,35 @@ Process to First Incorporate this SDK
    redirect logging to an object in your app, and options on when push notifications message IDs should
    stop being associated with events.
 
-8) The libSailthru library has support for armv7, armv7s, and armv64, and i386.
+8) The libSailthru library has support for armv7/armv7s,  armv64,  i386 and x86_64.
+
+
+Registration Best Practices
+---------------------------
+
+- At least during development, look at the return code - the SDK lets you know immediately if the set of
+  parameters is proper or not. If it returns NO, then does not send the registration delegate message.
+
+- If there is the expectation of getting an email address "soon":  register with the email address when you
+  get it, or if the user declines, register anonymously. If somehow you later get the address, then you
+  can re-register with the email address.
+
+- If your app has the email at launch (saved in KeyChain or elsewhere):  register in
+  'didRegisterForRemoteNotificationsWithDeviceToken:', or later if you wish. The iOS SDK runs the registration in the
+  background, on the lowest priority thread, so it should not affect the UI.
+
+ NOTES:
+
+- the SDK does not accept tracking messages until after you have registered (per-launch)
+
+- Sailthru requests that you avoid immediately registering anonymously, then after a short interval,
+  re-registering with a known email, to avoid thrashing your user accounts.
+
+- in iOS8, every call to 'registerForRemoteNotifications' results in a valid push token. However, it
+  appears that in some (possibly all) iOS7 versions, that if the user declines all notifications, a call to
+  'registerForRemoteNotificationTypes' effectively 'hangs' - iOS does not send any delegate response
+  (neither success nor failure). Thus, in iOS7, if a user declines notifications, it will not be possible to
+  register them.
 
 Tag format (from Sender.h, which is the definitive reference)
 ----------
@@ -243,6 +262,19 @@ Documentation at Sailthru Relative to Mobile:
 
 Prior Version Changes:
 ---------------
+- 3.4.0
+  * Resolved a race condition that may cause Push Notification "Open" messages to Sailthru to not succeed
+  * New optional delegate method returns the Sailthru 'HID', to assist in testing
+    push notifications to anonymous users
+  * Deprecated STLog threshold enumeration 'stLogType', now Swift usable format 'STLogType'
+  * Removed the iOS6 library as iOS8 is GA. Only one other binary, for iOS7+, is now provided.
+- 3.3.5
+  * Support for the client-supplied key/values attached to Push Notifications
+  * Recommendations offers more options
+  * The documentation for 'recommendations' incorrectly stated that the values in the 'tags' array 
+    were logically ORed by Sailthru; they are logically ANDed
+  * New Event type accepts both tags and a single URL
+  * Enumerations changed to fit into a Swift usable format, older ones deprecated
 - 3.3.0
   * Improved Anonymous -> Email -> Anonymous -> Email registration handling
   * Properly handle to back-to-back registration messages
