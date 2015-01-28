@@ -39,12 +39,6 @@ The Sailthru iOS SDK provides:
     *   Tags viewed
     *   Geolocation 
 *  Recommendation delivery 
-*  Push Notifications
-    *  Badge & Sound support
-    *  Deep Linking support
-    *  Rich push notification (pushing data along with an alert) support
-    *  Silent push notification (pushing data without an alert) support
-
 
 ### CocoaPods
 
