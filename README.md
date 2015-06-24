@@ -76,29 +76,29 @@ Alternately, always use 'silent' push notifications, include the alert text as a
 
 Answers to Frequently Asked Questions
 ------------------------------------------
+Q: The SDK won't work with iOS9 Beta
 
-Q: Have you tested with iOS8?
+Apple iOS9 introduces enhanced network security features. Currently, when the SDK attempts to contact Sailthru.com, a known issue at our site results in an SSL error. To work around this add the following to your info.plist:
 
-Yes - the SDK works properly with iOS7 and iOS8, and can be called from Swift code.
+     <key>NSAppTransportSecurity</key>
+     <dict>
+       <key>NSExceptionDomains</key>
+       <dict>
+         <key>sailthru.com</key>
+         <dict>
+            <key>NSIncludesSubdomains</key>
+          <true/>
+           <key>NSExceptionRequiresForwardSecrecy</key>
+           <false/>
+         </dict>
+       </dict>
+     </dict>
 
-Q: How can I test that Push Notifications are functional?
+This allows your app to communicate with any subdomain on sailthru.com, but does not otherwise affect your app's security. Sailthru is actively working to update its site so that no exclusion would be necessary.
 
-You can use API Test on my.sailthru.com. Documentation is found on [docs.sailthru.com](http://docs.sailthru.com/documentation/products/mobile-push-notification-sending)
+Q: Have you tested with iOS8/iOS9? Swift?
 
-Q: How do I obtain the key/value data included contained in Push Notification?
-
-Client added JSON data (key/value pairs), when provided, get added to the 'aps' dictionary with a 'json' key, and returned by *didReceiveRemoteNotification:isBooting:.* Both keys and values are NSStrings, even if numeric. For example:
-
-    {
-     aps = {
-       alert = "Howdie Partner!";
-     };
-     json =    {
-        "key" = "value";
-        "2" = "55";        // Strings!
-     };
-    }
-
+Yes - the SDK works properly with iOS versions 7 to 9, and also interoperates with Swift.
 
 Q: What are the most common problems integrating the Sailthru SDK?
 
@@ -153,4 +153,4 @@ That feature will likely be gone in the next release. Switch to using whatever t
 * Brenden Mulligan, co-founder and designer at **Cluster**, [documented the approach](http://techcrunch.com/2014/04/04/the-right-way-to-ask-users-for-ios-permissions/) on **TechCrunch** that his company uses to increase the percentage of users who allow push notifications etc. Definitely worth a read!
 
 
-Copyright (c) 2014 Sailthru, Inc    
+Copyright (c) 2014-2015 Sailthru, Inc    
