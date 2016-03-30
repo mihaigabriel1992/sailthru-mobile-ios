@@ -7,8 +7,12 @@
 
 #import <CoreLocation/CoreLocation.h>
 
-// NOTE: You need to have one tag, an event, or a url set on an Event for the SDK to send it.
+#pragma clang assume_nonnull begin
+#if ! __has_feature(nullability)
+#define nullable
+#endif
 
+// NOTE: You need to have one tag, an event, or a url set on an Event for the SDK to send it.
 
 /** 
  Unfortunately, Xcode will not process doxygen comments for class methods, so this note will have to suffice.
@@ -19,6 +23,8 @@
  - all upper case characers are converted to lower case
  - if the result is a number, or starts with a number, it's discarded
  - finally, if the resultant string is longer than 32 characters, its truncated to that length
+ 
+ URLs: note that urls are simply saved in the user profile, and the Sailthru tags are **not** extracted.
  
  More information on tags can be found here:
  http://getstarted.sailthru.com/documentation/products/horizon-data-collection/horizon-meta-tags
@@ -37,7 +43,7 @@
 + (STEvent *)eventWithURL:(NSString *)url; 
 + (STEvent *)eventWithURL:(NSString *)url location:(CLLocationCoordinate2D)location;
 
-// - an event with a list of interesting tags, a URL, and an optional location
+// - an event with a list of interesting tags, a URL, and an optional location. Tags and URL most both be non-nil.
 + (STEvent *)eventWithTags:(NSArray *)tags URL:(NSString *)url;	// Event tags and a URL
 + (STEvent *)eventWithTags:(NSArray *)tags URL:(NSString *)url location:(CLLocationCoordinate2D)location;
 
@@ -68,4 +74,6 @@
 - (NSString *)description;			// you can log the current event using NSLog(@"Current Event: %@", stEvent);
 
 @end
+
+#pragma clang assume_nonnull end
 
