@@ -92,7 +92,7 @@ static NSData __attribute__((unused)) *hexToData(NSString *str)
 	STSDKMode apnsMode = STSDKModeProduction;
 	NSString *appID		= @"1234567890ABCD";			// the string returned by Sailthru when you register your app
 #else
-	STSDKMode apnsMode = STSDKModeDevelopement;
+	STSDKMode apnsMode = STSDKModeDevelopment;
 	NSString *appID		= @"DCBA9876543210";			// the string returned by Sailthru when you register your app
 	#warning Sailthru Registration using Development Mode.	// nice trick for Development builds - you won't see any warning in a Production build.
 #endif
