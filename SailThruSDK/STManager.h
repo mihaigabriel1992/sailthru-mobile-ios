@@ -5,14 +5,18 @@
 //  Copyright (c) 2013-2014 Sailthru, Inc. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
+
+#if __has_feature(nullability)
+#pragma clang assume_nonnull begin
+#else
+#define nullable
+#endif
+
 // Reachability flags
 #define kSailthruUp				@"sailthruUp"
 #define kInternetUp				@"internetUp"
 
-typedef enum {
-	STEAnonIdentifier=1,	///< An anonymous account—no email yet
-	STEMailIdentifier		///< Parameter will be an email address in the familiar 'name@@account' format
-} STUserIdentifier			__attribute__((deprecated("Use 'STUser' (Swift Friendly)")));
 typedef NS_ENUM(NSInteger, STUser) {
    STUserTypeAnon=1,
    STUserTypeMail,
@@ -21,15 +25,6 @@ typedef NS_ENUM(NSInteger, STUser) {
  Tracking information is tagged with the Push ID until the app backgrounds,
  a time period is exceeded, or your app removes the tagging explicitly.
 */
-typedef enum {
-	stUntilBackgrounded,	///< When the user switches to another app - the default
-	st05minutes,			///< 5 minutes after the push note is received
-	st15minutes,			///< 15 minutes after the push note is received,
-	st60minutes,			///< One hour
-	st24hours,				///< One day
-
-	stPushNotePerEnd		///< just marks the end of the enumeration
-} STPushNotePersistence		__attribute__((deprecated("Use 'STPushNotePersist' (Swift Friendly)")));
 typedef NS_ENUM(NSInteger, STPushNotePersist) {
    STPushNotePersistUntilBackgrounded=0,
    STPushNotePersistFor05Minutes,
@@ -40,12 +35,8 @@ typedef NS_ENUM(NSInteger, STPushNotePersist) {
    STPushNotePersistEnumEnd
 };
 
-typedef enum {
-	stDevelopmentMode,		// Development APNS
-	stProductionMode		// Production APNS
-} STPushNoteMode			__attribute__((deprecated("Use 'STSDKMode' (Swift Friendly)")));
 typedef NS_ENUM(NSInteger, STSDKMode) {
-   STSDKModeDevelopement,
+   STSDKModeDevelopment,
    STSDKModeProduction,
 };
 
@@ -67,23 +58,10 @@ typedef NS_ENUM(NSInteger, STSDKMode) {
  If you send a \i registerUsingMode:</a> message before an earlier one
  has sent this delegate message, you may or may not get the first message before the latter.
  */
-- (void)registrationSucceeded:(BOOL)success error:(NSString *)errorMsg;
+- (void)registrationSucceeded:(BOOL)success error:(nullable NSString *)errorMsg;
+// Swift: func registrationSucceeded(success: Bool, errorMsg: NSString?)
 
 @optional
-
-/**
- The SDK intended to assist client apps to retry obtaining a push token if their
- original request was unanswered by Apple (as Apple documents). However, since
- the SDK didn't know when you sent the original request, or subsequent requests, 
- it was often sent even when it served no purpose. App developers who depended on
- this reminder should add their own mechanism (timer) to insure that they receive
- either a positive or negative response to their requiest for a token.
-@note
- If you had wanted to shut this message off, then you were to send the @a registerUsingMode: message
- with a nil token—all other parameters are ignored. This call is still accepted by it does
- nothing at this time.
-*/
-- (void)pleaseRegisterWithoutUserID __attribute__((deprecated("No longer sent")));
 
 /**
  Issued when the status of the cellular or wifi network changes - you can examine
@@ -105,8 +83,8 @@ typedef NS_ENUM(NSInteger, STSDKMode) {
 
 /**
  Delegate response to the @a recommend:</a> message. Network errors or an inoperable network return an error.
- @param items An array of one or more NSDictionaries.
- @param error If the request failed, and items is nil, then some reason.
+ @param items An array of one or more NSDictionaries on success, or nil if an error occurred.
+ @param error Only defined when the request fails.
  @return Each dictionary in @a items contains some or all of the following keys:
  @returns @a consumed: URL previously offered to the user
  @returns @a date: when created (UNIX seconds since 1970 format)
@@ -119,12 +97,12 @@ typedef NS_ENUM(NSInteger, STSDKMode) {
  @returns @a url: where to find the recommendation
  @returns @a views: recommended to the user this many times already
  @note If the user account is relatively new, and the Sailthru Recommendation Engine
- has nothing to recommend, an error indication is generated (not an empty items array).
-
+ has nothing to recommend, an error indication is generated (not an empty items array as you might suppose).
 
  The recommendation Service is relatively new API and additional keys in the returned data may appear at any time.
 */
-- (void)recommendations:(NSArray *)items error:(NSError *)error;
+- (void)recommendations:(nullable NSArray *)items error:(nullable NSError *)error;
+// Swift: func recommendations(items: NSArray? error:NSError?)
 
 /**
  Sent immediately after the delegate 'registrationSucceeded:error; message, but only
@@ -141,9 +119,9 @@ typedef NS_ENUM(NSInteger, STSDKMode) {
 @interface STManager : NSObject
 
 // If interested you can query these (they use Apple's 'ReachAbility' class)
-@property (nonatomic, assign, readonly) BOOL internetUp;	///< Either wifi or cellular data is available
-@property (nonatomic, assign, readonly) BOOL wifiUp;		///< Wifi is available
-@property (nonatomic, assign, readonly) BOOL cellularUp;	/** Cellular networking is available */
+@property (atomic, assign, readonly) BOOL internetUp;	///< Either wifi or cellular data is available
+@property (atomic, assign, readonly) BOOL wifiUp;		///< Wifi is available
+@property (atomic, assign, readonly) BOOL cellularUp;	/** Cellular networking is available */
 
 /*
  Creates the shared instance of the Sailthru Manager.
@@ -158,7 +136,7 @@ typedef NS_ENUM(NSInteger, STSDKMode) {
  @returns The singleton manager, or @c nil if that was not yet created.
  @note Unfortunately, Xcode won't display class comments: rdar://16252256
 */
-+ (instancetype)sailthruManager;
++ (nullable instancetype)sailthruManager;
 
 /**
  The means to register an identified or anonymous user.
@@ -191,14 +169,9 @@ typedef NS_ENUM(NSInteger, STSDKMode) {
  @param token @a NSData object returned from @a -didRegisterForRemoteNotificationsWithDeviceToken. See @e Notes.
  
  @returns @a YES if all parameters of the proper type were provided and the message sent on the main thread,
- @a NO otherwise (includeing providing a @a nil token to disable the @a pleaseRegisterWithoutUserID messages.
+ @a NO otherwise.
  
- @note If you for any reason decide not to register a user, you can disable the @a pleaseRegisterWithoutUserID
- reminder delegate message by sending the registeration message
- with a @c nil token—all other parameters are ignored. You might want to do this, for instance, during development.
-*/
-- (BOOL)registerUsingMode:(STPushNoteMode)apnsMode horizonDomain:(NSString *)domain apiKey:(NSString *)apiKey appID:(NSString *)appID userIDtype:(STUserIdentifier)usertype userID:(NSString *)uid token:(NSData *)token
-  __attribute__((deprecated("Use registerUsingSDKMode (Swift Friendly)")));
+ */
 - (BOOL)registerUsingSDKMode:(STSDKMode)apnsMode horizonDomain:(NSString *)domain apiKey:(NSString *)apiKey appID:(NSString *)appID userIDtype:(STUser)usertype userID:(NSString *)uid token:(NSData *)token;
 
 /** 
@@ -222,7 +195,6 @@ typedef NS_ENUM(NSInteger, STSDKMode) {
  @param behavior An enumerated lists of events or time expiration that define when tagging stops.
  The default is @a stUntilBackgrounded.
 */
-- (void)setEventTaggingBehavior:(STPushNotePersistence)behavior __attribute__((deprecated("Paramter now STPushNotePersist")));
 - (void)useEventTaggingBehavior:(STPushNotePersist)behavior;
 
 
@@ -261,12 +233,12 @@ typedef NS_ENUM(NSInteger, STSDKMode) {
  and thus if the network is unavailable you will surely get a failed response.
 
  @param tags Restrict the recommendations to a logical 'ANDing' of the provided array of interest tags,
- or @a nil for no restriction.
+ or @a an empty array for no restriction.
  
  @param count The number of desired recommendations. The parameter is clamped to: 1 <= count <= 100
  @return @a YES if you have implemented the appropriate delegate method and this message sent on the main thread.
  
- @trackingTags Optional array of tags to be added to the user profile.
+ @trackingTags Array of tags to be added to the user profile, if none supply an empty array.
  
  @url An optional URL, which if provided should be a URL that the user has recently visitied.
  Sailthru will extract interest tags from this page and possibly use those to drive recommendations (see next parameter).
@@ -277,16 +249,8 @@ typedef NS_ENUM(NSInteger, STSDKMode) {
  The recommendations are returned in a delegate message.
 */
 
-- (BOOL)recommendWithFilterTags:(NSArray *)filterTags count:(NSUInteger)count trackingTags:(NSArray *)trackingTags url:(NSString *)url preferStoredTags:(BOOL)preferStoredTags;
+- (BOOL)recommendWithFilterTags:(NSArray *)filterTags count:(NSUInteger)count trackingTags:(NSArray *)trackingTags url:(nullable NSString *)url preferStoredTags:(BOOL)preferStoredTags;
 - (BOOL)recommendWithFilterTags:(NSArray *)filterTags count:(NSUInteger)count;	// Sets trackingTags=nil, url=nil, preferSavedTags=ignored
-- (BOOL)recommend:(NSArray *)filterTags count:(NSUInteger)count __attribute__((deprecated("Use recommendWithFilterTags (Swift Friendly)")));
-
-/**
- Path to the Documents directory, to save user important files that cannot be recreated.
- @returns The path as provided by the @a sharedApplication abject
- @note Use "+ (NSString *)applicationDocumentsDirectory { return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject]; }
-*/
-+ (NSString *)applicationDocumentsDirectory __attribute__((deprecated("Will be removed soon")));
 
 /**
  Path to the Application Support directory, to save app created files.
@@ -302,3 +266,8 @@ typedef NS_ENUM(NSInteger, STSDKMode) {
 + (BOOL)markDoNotBackUp:(NSString *)path;
 
 @end
+
+#if __has_feature(nullability)
+#pragma clang assume_nonnull end
+#endif
+

@@ -5,6 +5,8 @@
 //  Copyright (c) 2013-2014 Sailthru, Inc. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
+
 // Primary interface to libSailthru.a
 #import "STManager.h"
 

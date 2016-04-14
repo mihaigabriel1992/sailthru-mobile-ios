@@ -5,6 +5,14 @@
 //  Copyright (c) 2013-2014 Sailthru, Inc. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
+
+#pragma clang assume_nonnull begin
+#if ! __has_feature(nullability)
+#define nullable
+#define __nullable
+#endif
+
 // If you'd like to receive the log messages and deal with them yourself, make yourself the delegate
 @protocol STLogging <NSObject>
 
@@ -13,16 +21,6 @@
 @end
 
 // Users can get more or less information as desired.
-
-typedef enum {
-	stError=-1,
-	stInternal=0,
-	stInformative,
-	stWarning,
-	stHard,
-	stCatastrophic,
-	stDisableLogging
-} stLogType __attribute__((deprecated("Use 'STLogType' (Swift Friendly)")));
 
 typedef NS_ENUM(NSInteger, STLogType) {
    STLogTypeError		= -1,
@@ -39,4 +37,6 @@ typedef NS_ENUM(NSInteger, STLogType) {
 STLogType stSetLogThreshold(STLogType t);
 
 // A weak reference to logger is kept
-void stSetLogger(id <STLogging> logger);
+void stSetLogger(__nullable id <STLogging> logger);
+
+#pragma clang assume_nonnull end
