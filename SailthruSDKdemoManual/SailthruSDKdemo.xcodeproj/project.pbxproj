@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DE4EAE1717CCDE2D00061FBB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE4EAE1617CCDE2D00061FBB /* SystemConfiguration.framework */; };
+		DE85889F1CBFF2F10000FBA5 /* libSailthru.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DE85889E1CBFF2F10000FBA5 /* libSailthru.a */; };
 		DE8FE6C317A6BA2800DCE67F /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DE8FE6C117A6BA2800DCE67F /* Icon.png */; };
 		DE8FE6C417A6BA2800DCE67F /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DE8FE6C217A6BA2800DCE67F /* Icon@2x.png */; };
 		DEB5F4711741708000674D02 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEB5F4701741708000674D02 /* UIKit.framework */; };
@@ -22,7 +23,6 @@
 		DEB5F48A1741708000674D02 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DEB5F4891741708000674D02 /* ViewController.m */; };
 		DEB5F48D1741708000674D02 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DEB5F48B1741708000674D02 /* ViewController.xib */; };
 		DEE4868B1896BC530024963A /* README in Resources */ = {isa = PBXBuildFile; fileRef = DEE486891896BC530024963A /* README */; };
-		DEFA282E19D46D38004A2633 /* libSailthru.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DEFA282D19D46D38004A2633 /* libSailthru.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +31,7 @@
 		DE4EAE1317CCD99E00061FBB /* STLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STLog.h; sourceTree = "<group>"; };
 		DE4EAE1417CCD99E00061FBB /* STManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STManager.h; sourceTree = "<group>"; };
 		DE4EAE1617CCDE2D00061FBB /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		DE85889E1CBFF2F10000FBA5 /* libSailthru.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSailthru.a; sourceTree = "<group>"; };
 		DE8FE6C117A6BA2800DCE67F /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		DE8FE6C217A6BA2800DCE67F /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		DEB5F46D1741708000674D02 /* SailthruSDKdemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SailthruSDKdemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -50,7 +51,6 @@
 		DEB5F4891741708000674D02 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		DEB5F48C1741708000674D02 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
 		DEE486891896BC530024963A /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
-		DEFA282D19D46D38004A2633 /* libSailthru.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSailthru.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DEFA282E19D46D38004A2633 /* libSailthru.a in Frameworks */,
+				DE85889F1CBFF2F10000FBA5 /* libSailthru.a in Frameworks */,
 				DE4EAE1717CCDE2D00061FBB /* SystemConfiguration.framework in Frameworks */,
 				DEB5F4711741708000674D02 /* UIKit.framework in Frameworks */,
 				DEB5F4731741708000674D02 /* Foundation.framework in Frameworks */,
@@ -80,6 +80,15 @@
 			);
 			name = SailThruSDK;
 			path = ../SailThruSDK;
+			sourceTree = "<group>";
+		};
+		DE85889D1CBFF2F10000FBA5 /* ios8+ */ = {
+			isa = PBXGroup;
+			children = (
+				DE85889E1CBFF2F10000FBA5 /* libSailthru.a */,
+			);
+			name = "ios8+";
+			path = "../../SailThruSDK/ios8+";
 			sourceTree = "<group>";
 		};
 		DEB5F4641741708000674D02 = {
@@ -114,7 +123,7 @@
 		DEB5F4761741708000674D02 /* SailthruSDKdemo */ = {
 			isa = PBXGroup;
 			children = (
-				DEFA282C19D46D38004A2633 /* ios7+ */,
+				DE85889D1CBFF2F10000FBA5 /* ios8+ */,
 				DEB5F47F1741708000674D02 /* AppDelegate.h */,
 				DEB5F4801741708000674D02 /* AppDelegate.m */,
 				DEB5F4881741708000674D02 /* ViewController.h */,
@@ -139,15 +148,6 @@
 				DEB5F4861741708000674D02 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		DEFA282C19D46D38004A2633 /* ios7+ */ = {
-			isa = PBXGroup;
-			children = (
-				DEFA282D19D46D38004A2633 /* libSailthru.a */,
-			);
-			name = "ios7+";
-			path = "../../SailThruSDK/ios7+";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
