@@ -1,5 +1,5 @@
 Sailthru's iOS SDK
-Current Release Version: 3.5.2
+Current Release Version: 3.8.0
 
 IMPORTANT NOTE REGARDING IOS9 TESTING
 -------------------------------------
@@ -23,7 +23,7 @@ known limitation in the Sailthru web service. To work around this add this to yo
 </dict>
 
 
-December 12, 2014
+April 13, 2016
 ------------------
 
 First time SDK users should first read the "Process to First Incorporate this SDK" section,
@@ -34,20 +34,18 @@ target.
 
 Version Changes:
 ---------------
-- 3.5.2
-  * Fixed enum spelling error (STSDKModeDevelopement -> STSDKModeDevelopment)
-  * Removed deprecated enums and methods
-  * Registration failures due to 401 or 404 now return the text of the Sailthru error message
+- 3.8.0
+  * Added Swift Annotations
+  * Removed deprecated methods
 
 [Prior version history moved to the bottom of this file.]
-
 
 Process to Add the SDK to Your Project
 --------------------------------------
 
 1) Copy the SailthruSDK folder to the app folder, which contains the ".xcodeproj" project file,
    then add the directory to your project, but don't add it to any targets (unselect the checkbox).
-   
+
 2) Add the appropriate library (iOS 6.0 or 7.0) folder, by going to your target's
    Build Phase tab, Link Binary with Libraries, tap on "+", then navigate to the appropriate
    folder and select libSailthru.a
@@ -58,17 +56,17 @@ Process to Add the SDK to Your Project
   * Search Paths -> User Header Search Paths: $PROJECT_DIR/SailthruSDK
   * Linking -> Other Link Flags: -ObjC  NOTE: If you fail to do this, your app will crash on launch.
 
-4) Add #import "SailthruSDK" line to AppDelegate and wherever else you want 
+4) Add #import "SailthruSDK" line to AppDelegate and wherever else you want
    to use the SDK, or add it to your pch file.
 
 5) Add the STManager and STManagerDelegate code as found in AppDelegate. Essentially you need
    to instantiate the STManager singleton, then register your app. If you want to test in the Simulator,
-   you need to get a push token from a run on a device, then hard copy that to your app in 
+   you need to get a push token from a run on a device, then hard copy that to your app in
    didFailToRegisterForRemoteNotificationsWithError method (shown in the demo app).
 
 6) Samples of sending a tracking event are in ViewController.m. You get two flavors of events: URLs and tags.
 
-7) Spend a few moments browsing the three ST... headers. There are methods to select more or less logging, 
+7) Spend a few moments browsing the three ST... headers. There are methods to select more or less logging,
    redirect logging to an object in your app, and options on when push notifications message IDs should
    stop being associated with events.
 
@@ -78,22 +76,22 @@ Process to Add the SDK to Your Project
 Process to Use the SDK
 ----------------------
 
-1) Register your App with Sailthru. 
+1) Register your App with Sailthru.
 
-   You will need to provide the push certifcate (in .p12 format), 
-   your app's bundleID, and select "dev" or "prod" (telling 
+   You will need to provide the push certifcate (in .p12 format),
+   your app's bundleID, and select "dev" or "prod" (telling
    Sailthru which APNS to use). Sailthru returns an "app_id", which
    you must supply to the SDK along with your "api_key". When exporting your
    certificate do not enter a passeword - just click on OK.
-   
+
    Note that you will most likely register your app twice: once for
    development (using the dev APNS), and once for the App Store release
    (using the production APNS).
-   
+
    To enable your account for mobile use, please contact your Sailthru Acccount
-   Manager. You will register the app then using the "Mobile" option 
-   under the "Settings" menu in my.sailthru.com 
-   
+   Manager. You will register the app then using the "Mobile" option
+   under the "Settings" menu in my.sailthru.com
+
 2) Incorporate the SDK into your App.
 
    The SDK is provided as a library with header files: currently there is one version
@@ -108,11 +106,15 @@ Process to Use the SDK
      'registerUsingMode:horizonDomain:apiKey:appID:userIDtype:userID:token:'
 
    which returns an immediate indication as to whether all parameters appear reasonable
+<<<<<<< HEAD
    (meaning you could assert on the return code in dev builds). It then registers 
+=======
+   (meaning you could assert on the return code in dev builds). It then registers
+>>>>>>> 6eb273d22af17a6335f33fd2b3f8a911cc41246e
    in the background and messages the delegate when registration succeeds or fails
    (failure is almost for sure a typo or reversed parameter). If
    the network is slow or unavailable this process may take some time.
-   
+
 4) Send tracking info.
 
    See STEvent for the two types of tracking events - tags and urls. Your app can start
@@ -124,9 +126,13 @@ Process to Use the SDK
 
 5) Push Notifications
 
-   Push notifications get sent using the existing user contact infastructure, either from 
+   Push notifications get sent using the existing user contact infastructure, either from
    the web interface or using the Sailthru API.
+<<<<<<< HEAD
    
+=======
+
+>>>>>>> 6eb273d22af17a6335f33fd2b3f8a911cc41246e
    When your app receives a push notification from Sailthru, you should call
 
       'didReceiveRemoteNotification:(NSDictionary *)userInfo isBooting:(BOOL)booting'
@@ -139,7 +145,7 @@ Process to Use the SDK
 6) Prepare for Development and Production Builds
 
    Sailthru generates two different appIDs when you define both Development and a Production apps.
-   Since the registration call needs to know which of the two its registering, you need to change 
+   Since the registration call needs to know which of the two its registering, you need to change
    two parameters when chosing one or the other. A good way to do this automatically in Xcode is to
    set a preprocessor define for the Production build, and possibly add a warning when building
    for Development, so you cannot accidentally build using the incorrect information.
@@ -156,17 +162,17 @@ Process to Use the SDK
 Notes:
 
 a) thread-safety
-   
-   Messages to the STManager singleton should be sent on the main queue, but other 
+
+   Messages to the STManager singleton should be sent on the main queue, but other
    event tracking messages can be sent on any thread/dispatch_queue. All delegate messages
    arrive on the main queue. [If you'd like the ability to specify a delegate
    queue just ask.]
 
 b) categories
-  
+
    The Sailthru library only uses categories on its own classes, all of which use the "ST" prefix.
 
-c) Apple has some great material to assist in debugging push notification problems. 
+c) Apple has some great material to assist in debugging push notification problems.
  - Read this StackOverFlow answer: http://stackoverflow.com/a/20110555/1633251. This article
    has a reference to an internal Apple Dev forum on how to install tracking profiles (that
    as of today don't work with iOS7).
@@ -229,7 +235,7 @@ referenced here support attaching some of the logging information generated by o
 can output logging information at a variety of levels. The lowest level, stInformative (see STLog.h),
 outputs a huge stream of info. The highest level, stCatastrophic, may not cause any output.
 
-By implementing the STLogging protocol, you can add one method to any persistent object in your app, 
+By implementing the STLogging protocol, you can add one method to any persistent object in your app,
 and provide it to your service's SDK. This information can prove of invaluable help to Sailthru
 if you end up having a crash in our SDK.
 
@@ -267,7 +273,7 @@ BugSense:
 
 Create an NSDictionary with the data that you want to send:
 
-(BOOL) application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions 
+(BOOL) application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     NSDictionary *aNiceLittleDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"myObject", @"myKey", nil];
     ...
@@ -276,11 +282,11 @@ Create an NSDictionary with the data that you want to send:
    //...
 }
 
-The first argument is the BugSense API key (NSString). The second argument is an NSDictionary with custom data. 
+The first argument is the BugSense API key (NSString). The second argument is an NSDictionary with custom data.
 Calling this method again will not let you redefine the data for this instance of the crash controller.
 
-There are two ways to use custom data in your application. In standard mode, the crash controller sends the crash report 
-on relaunch and uses the custom data that you provide in the factory method, as is. In immediate dispatch mode, 
+There are two ways to use custom data in your application. In standard mode, the crash controller sends the crash report
+on relaunch and uses the custom data that you provide in the factory method, as is. In immediate dispatch mode,
 it often makes sense to use an NSMutableDictionary, keep a reference to it and update the data as you go along.
 
 The mutable dictionary would contain an array of log messages, which means the client app
@@ -296,6 +302,13 @@ Documentation at Sailthru Relative to Mobile:
 
 Prior Version Changes:
 ---------------
+<<<<<<< HEAD
+=======
+- 3.5.2
+  * Fixed enum spelling error (STSDKModeDevelopement -> STSDKModeDevelopment)
+  * Removed deprecated enums and methods
+  * Registration failures due to 401 or 404 now return the text of the Sailthru error message
+>>>>>>> 6eb273d22af17a6335f33fd2b3f8a911cc41246e
 - 3.5.0
   * Provided proper Swift signature for a few STManager delegate methods
   * Can now request recommendations in response to a silent push notification (in background)
@@ -310,7 +323,11 @@ Prior Version Changes:
 - 3.3.5
   * Support for the client-supplied key/values attached to Push Notifications
   * Recommendations offers more options
+<<<<<<< HEAD
   * The documentation for 'recommendations' incorrectly stated that the values in the 'tags' array 
+=======
+  * The documentation for 'recommendations' incorrectly stated that the values in the 'tags' array
+>>>>>>> 6eb273d22af17a6335f33fd2b3f8a911cc41246e
     were logically ORed by Sailthru; they are logically ANDed
   * New Event type accepts both tags and a single URL
   * Enumerations changed to fit into a Swift usable format, older ones deprecated
@@ -342,7 +359,7 @@ Prior Version Changes:
 - 3.0.0
   * added methods to access the Sailthru Recommendation service
 - 2.0.0
-  * an iOS 7.0 library was added. The primary difference between it and the iOS6 library is that 
+  * an iOS 7.0 library was added. The primary difference between it and the iOS6 library is that
   it uses the new NSURLSession instead of NSURLConnection (but does not do background transmission).
   * the iOS5.1 library was pulled. If anyone really needs it, just ask and we'll re-enable it for you.
 
