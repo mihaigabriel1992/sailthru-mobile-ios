@@ -1,24 +1,24 @@
 Pod::Spec.new do |s|
   s.name                  = 'Sailthru_SDK_iOS'
   s.license               = { :type => 'Apache License, Version 2.0', :file => 'LICENSE.txt' }
-  s.version               = '3.4.0'
+  s.version               = '3.8.0'
   s.summary               = 'Supports Sailthru Push Notifications and Analytics.'
   s.homepage              = 'https://github.com/sailthru/sailthru-mobile-ios'
   s.author                = { 'Sailthru, Inc' => 'mobile@sailthru.com' }
   s.platform              = :ios
-  s.ios.deployment_target = '7.0'
+  s.ios.deployment_target = '8.0'
   s.source                = { :git => 'https://github.com/sailthru/sailthru-mobile-ios.git', :branch => 'master', :tag => "v" +  s.version.to_s }
   s.requires_arc          = true
-  s.default_subspec       = 'ios7'
-  s.subspec 'ios7' do |sp|
+  s.default_subspec       = 'ios8+'
+  s.subspec 'ios8+' do |sp|
     sp.source_files        = "SailThruSDK/*.h"
-    sp.preserve_paths      = 'SailThruSDK/README', 'SailThruSDK/ios7+/libSailthru.a'
-	sp.ios.vendored_library = 'SailThruSDK/ios7+/libSailthru.a'
+    sp.preserve_paths      = 'SailThruSDK/README', 'SailThruSDK/ios8+/libSailthru.a'
+	sp.ios.vendored_library = 'SailThruSDK/ios8+/libSailthru.a'
     sp.library             = 'Sailthru'
-    sp.xcconfig            = { 'LIBRARY_SEARCH_PATHS' => '$(PODS_ROOT)/Sailthru_SDK_iOS/SailThruSDK/ios7+' }
+    sp.xcconfig            = { 'LIBRARY_SEARCH_PATHS' => '$(PODS_ROOT)/Sailthru_SDK_iOS/SailThruSDK/ios8+' }
     sp.frameworks          = 'Foundation', 'SystemConfiguration'
     sp.platform              = :ios
-    sp.ios.deployment_target = '7.0'
+    sp.ios.deployment_target = '8.0'
   end
 
   s.description           = <<-DESC
