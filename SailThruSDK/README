@@ -1,5 +1,5 @@
 Sailthru's iOS SDK
-Current Release Version: 3.8.0
+Current Release Version: 3.8.1
 
 IMPORTANT NOTE REGARDING IOS9 TESTING
 -------------------------------------
@@ -34,11 +34,11 @@ target.
 
 Version Changes:
 ---------------
-- 3.8.0
-  * Added Swift Annotations
-  * Removed deprecated methods
+- 3.8.1
+  * Update Documentation
 
 [Prior version history moved to the bottom of this file.]
+
 
 Process to Add the SDK to Your Project
 --------------------------------------
@@ -106,11 +106,7 @@ Process to Use the SDK
      'registerUsingMode:horizonDomain:apiKey:appID:userIDtype:userID:token:'
 
    which returns an immediate indication as to whether all parameters appear reasonable
-<<<<<<< HEAD
-   (meaning you could assert on the return code in dev builds). It then registers 
-=======
    (meaning you could assert on the return code in dev builds). It then registers
->>>>>>> 6eb273d22af17a6335f33fd2b3f8a911cc41246e
    in the background and messages the delegate when registration succeeds or fails
    (failure is almost for sure a typo or reversed parameter). If
    the network is slow or unavailable this process may take some time.
@@ -128,11 +124,7 @@ Process to Use the SDK
 
    Push notifications get sent using the existing user contact infastructure, either from
    the web interface or using the Sailthru API.
-<<<<<<< HEAD
-   
-=======
 
->>>>>>> 6eb273d22af17a6335f33fd2b3f8a911cc41246e
    When your app receives a push notification from Sailthru, you should call
 
       'didReceiveRemoteNotification:(NSDictionary *)userInfo isBooting:(BOOL)booting'
@@ -302,13 +294,13 @@ Documentation at Sailthru Relative to Mobile:
 
 Prior Version Changes:
 ---------------
-<<<<<<< HEAD
-=======
+- 3.8.0
+   * Added Swift Annotations
+   * Removed deprecated methods
 - 3.5.2
   * Fixed enum spelling error (STSDKModeDevelopement -> STSDKModeDevelopment)
   * Removed deprecated enums and methods
   * Registration failures due to 401 or 404 now return the text of the Sailthru error message
->>>>>>> 6eb273d22af17a6335f33fd2b3f8a911cc41246e
 - 3.5.0
   * Provided proper Swift signature for a few STManager delegate methods
   * Can now request recommendations in response to a silent push notification (in background)
@@ -323,11 +315,7 @@ Prior Version Changes:
 - 3.3.5
   * Support for the client-supplied key/values attached to Push Notifications
   * Recommendations offers more options
-<<<<<<< HEAD
-  * The documentation for 'recommendations' incorrectly stated that the values in the 'tags' array 
-=======
   * The documentation for 'recommendations' incorrectly stated that the values in the 'tags' array
->>>>>>> 6eb273d22af17a6335f33fd2b3f8a911cc41246e
     were logically ORed by Sailthru; they are logically ANDed
   * New Event type accepts both tags and a single URL
   * Enumerations changed to fit into a Swift usable format, older ones deprecated
